@@ -1,0 +1,154 @@
+@import 'tailwindcss';
+
+/* ------------------------------------------------------------------
+   Design tokens. ЕДИНСТВЕННЫЙ источник значений для всего проекта.
+   Палитра — по мотивам madeinrussia.com (navy #203b80, blue #0052a4,
+   accent #007bff). Произвольные значения в разметке запрещены.
+   ------------------------------------------------------------------ */
+@theme {
+  /* Сбрасываем дефолтную палитру Tailwind — доступны только наши токены */
+  --color-*: initial;
+
+  --color-white: #ffffff;
+  --color-black: #000000;
+
+  /* Бренд */
+  --color-brand-50: #eef4ff;
+  --color-brand-100: #d6e6ff;
+  --color-brand-200: #94c6ff;
+  --color-brand-400: #2196f3;
+  --color-brand-500: #007bff;
+  --color-brand-600: #0052a4;
+  --color-brand-800: #203b80;
+  --color-brand-900: #16295a;
+
+  /* Нейтральные */
+  --color-ink-900: #1a1a1a;
+  --color-ink-700: #5d5d5d;
+  --color-ink-500: #7f7f7f;
+  --color-ink-400: #9e9e9e;
+  --color-ink-300: #bfbfbf;
+  --color-ink-200: #e9e9e9;
+  --color-ink-100: #f0f0f0;
+  --color-ink-50: #f7f8fa;
+
+  /* Семантические */
+  --color-success: #1e8e3e;
+  --color-warning: #f4b400;
+
+  /* Шрифты */
+  --font-*: initial;
+  --font-sans: 'Manrope', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --font-devanagari: 'Noto Sans Devanagari', 'Manrope', ui-sans-serif, system-ui, sans-serif;
+
+  /* Радиусы (5/8/11 px как на референсе) */
+  --radius-*: initial;
+  --radius-sm: 0.3125rem;
+  --radius-md: 0.5rem;
+  --radius-lg: 0.6875rem;
+  --radius-xl: 1rem;
+  --radius-full: 9999px;
+
+  /* Ширина контента */
+  --container-content: 72rem;
+
+  /* Тени */
+  --shadow-card: 0 1px 2px rgb(32 59 128 / 0.06), 0 8px 24px rgb(32 59 128 / 0.08);
+  --shadow-card-hover: 0 2px 4px rgb(32 59 128 / 0.08), 0 16px 40px rgb(32 59 128 / 0.14);
+
+  /* Анимации */
+  --ease-out-soft: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* ------------------------------------------------------------------
+   Шрифты (self-hosted, woff2, subsets)
+   ------------------------------------------------------------------ */
+@font-face {
+  font-family: 'Manrope';
+  font-style: normal;
+  font-weight: 400 800;
+  font-display: swap;
+  src: url('../assets/fonts/manrope-latin.woff2') format('woff2');
+  unicode-range:
+    U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329,
+    U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: 'Manrope';
+  font-style: normal;
+  font-weight: 400 800;
+  font-display: swap;
+  src: url('../assets/fonts/manrope-latin-ext.woff2') format('woff2');
+  unicode-range:
+    U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329,
+    U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F,
+    U+A720-A7FF;
+}
+@font-face {
+  font-family: 'Manrope';
+  font-style: normal;
+  font-weight: 400 800;
+  font-display: swap;
+  src: url('../assets/fonts/manrope-cyrillic.woff2') format('woff2');
+  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+@font-face {
+  font-family: 'Manrope';
+  font-style: normal;
+  font-weight: 400 800;
+  font-display: swap;
+  src: url('../assets/fonts/manrope-cyrillic-ext.woff2') format('woff2');
+  unicode-range: U+0460-052F, U+1C80-1C8A, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
+}
+@font-face {
+  font-family: 'Noto Sans Devanagari';
+  font-style: normal;
+  font-weight: 400 700;
+  font-display: swap;
+  src: url('../assets/fonts/noto-sans-devanagari.woff2') format('woff2');
+  unicode-range:
+    U+0900-097F, U+1CD0-1CF9, U+200C-200D, U+20A8, U+20B9, U+20F0, U+25CC, U+A830-A839, U+A8E0-A8FF,
+    U+11B00-11B09;
+}
+
+/* ------------------------------------------------------------------
+   База
+   ------------------------------------------------------------------ */
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 5rem; /* высота липкого хедера */
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    @apply bg-white font-sans text-ink-900 antialiased;
+  }
+
+  html[lang='hi'] body {
+    @apply font-devanagari;
+  }
+
+  :focus-visible {
+    @apply outline-2 outline-offset-2 outline-brand-500;
+  }
+
+  ::selection {
+    @apply bg-brand-200 text-ink-900;
+  }
+
+  /* Все анимации и переходы отключаются при prefers-reduced-motion */
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}

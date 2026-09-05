@@ -1,0 +1,47 @@
+{
+  "name": "cement",
+  "type": "module",
+  "version": "0.1.0",
+  "private": true,
+  "engines": {
+    "node": ">=22.12.0"
+  },
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro",
+    "lint": "npm run lint:types && npm run lint:js && npm run lint:format && npm run lint:tokens",
+    "lint:types": "astro check",
+    "lint:js": "eslint .",
+    "lint:format": "prettier --check .",
+    "lint:tokens": "node scripts/check-tokens.mjs",
+    "format": "prettier --write .",
+    "test:a11y": "playwright test",
+    "shots": "node scripts/screenshots.mjs",
+    "check:budget": "node scripts/check-budget.mjs",
+    "lighthouse": "node scripts/lighthouse.mjs"
+  },
+  "devDependencies": {
+    "@astrojs/check": "^0.9.10",
+    "@astrojs/sitemap": "^3.7.4",
+    "@axe-core/playwright": "^4.13.0",
+    "@eslint/js": "^10.0.1",
+    "@lhci/cli": "^0.15.1",
+    "@playwright/test": "^1.63.0",
+    "@tailwindcss/vite": "^4.3.3",
+    "astro": "^7.3.1",
+    "eslint": "^10.10.0",
+    "eslint-plugin-astro": "^3.1.0",
+    "prettier": "^3.9.6",
+    "prettier-plugin-astro": "^0.14.1",
+    "prettier-plugin-tailwindcss": "^0.8.1",
+    "sharp": "^0.35.4",
+    "tailwindcss": "^4.3.3",
+    "typescript": "^6.0.3",
+    "typescript-eslint": "^8.69.0"
+  },
+  "allowScripts": {
+    "esbuild": true
+  }
+}

@@ -1,0 +1,9 @@
+dist/
+.astro/
+node_modules/
+package-lock.json
+screenshots/
+playwright-report/
+test-results/
+.lighthouseci/
+*.md
