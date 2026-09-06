@@ -7,6 +7,7 @@ import Header from './components/Header.astro';
 import About from './components/sections/About.astro';
 import Advantages from './components/sections/Advantages.astro';
 import Certificates from './components/sections/Certificates.astro';
+import Contacts from './components/sections/Contacts.astro';
 import Facts from './components/sections/Facts.astro';
 import Faq from './components/sections/Faq.astro';
 import Hero from './components/sections/Hero.astro';
@@ -33,6 +34,7 @@ const dict = getDict(lang);
   <Logistics dict={dict} />
   <Certificates dict={dict} />
   <Faq dict={dict} />
+  <Contacts dict={dict} />
 
   <Footer slot="footer" lang={lang} dict={dict} />
 </Base>

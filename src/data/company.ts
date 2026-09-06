@@ -13,4 +13,8 @@ export const company = {
   whatsapp: 'https://wa.me/70000000000', // TODO
   telegram: 'https://t.me/example', // TODO
   foundedYear: 2000, // TODO
+  maps: {
+    india: 'https://maps.google.com/?q=Mumbai', // TODO: точный адрес офиса в Индии
+    plant: 'https://maps.google.com/?q=Russia', // TODO: адрес завода
+  },
 } as const;

@@ -244,6 +244,35 @@ export const en = {
     moreTitle: 'Have a question we haven’t covered?',
     moreCta: 'Ask on WhatsApp',
   },
+  contacts: {
+    eyebrow: 'Contacts',
+    title: 'Talk to the export desk',
+    lead: 'Call, write or message — an export manager replies in English within one business day. For a quotation, tell us the grade, volume, packaging and destination port.',
+    channels: [
+      { key: 'phoneIn', label: 'India office', hint: 'Call in Indian business hours' },
+      { key: 'phoneRu', label: 'Plant, Russia', hint: 'Export department' },
+      { key: 'email', label: 'E-mail', hint: 'Requests for quotation and documents' },
+      { key: 'whatsapp', label: 'WhatsApp', hint: 'Quick questions and samples' },
+      { key: 'telegram', label: 'Telegram', hint: 'Alternative messenger' },
+    ],
+    hoursTitle: 'Working hours',
+    hours: ['Mon–Sat 9:00–18:00 IST (India office)', 'Mon–Fri 9:00–18:00 MSK (plant)'],
+    locations: [
+      {
+        title: 'India office',
+        name: 'TODO: Representative office',
+        address: 'TODO: Address, Mumbai, Maharashtra, India',
+        mapCta: 'Open in Google Maps',
+      },
+      {
+        title: 'Plant',
+        name: 'TODO: Company name',
+        address: 'TODO: Plant address, Russia',
+        mapCta: 'Open in Google Maps',
+      },
+    ],
+    note: 'TODO: replace placeholder phone numbers, e-mail, messenger links and addresses.',
+  },
   advantages: {
     eyebrow: 'Why us',
     title: 'What Indian buyers get from working with us directly',

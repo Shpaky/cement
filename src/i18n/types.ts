@@ -99,6 +99,20 @@ export interface Dictionary {
     moreTitle: string;
     moreCta: string;
   };
+  contacts: {
+    eyebrow: string;
+    title: string;
+    lead: string;
+    channels: {
+      key: 'phoneIn' | 'phoneRu' | 'email' | 'whatsapp' | 'telegram';
+      label: string;
+      hint: string;
+    }[];
+    hoursTitle: string;
+    hours: string[];
+    locations: { title: string; name: string; address: string; mapCta: string }[];
+    note: string;
+  };
   advantages: {
     eyebrow: string;
     title: string;
