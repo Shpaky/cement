@@ -123,6 +123,11 @@ export interface Dictionary {
     name: string;
     address: string;
   };
+  notFound: {
+    title: string;
+    text: string;
+    cta: string;
+  };
   footer: {
     aboutText: string;
     navTitle: string;

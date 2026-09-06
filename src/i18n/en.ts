@@ -308,6 +308,11 @@ export const en = {
     name: 'TODO: Company name', // TODO: официальное название компании
     address: 'TODO: Registered address, Russia', // TODO: адрес
   },
+  notFound: {
+    title: 'Page not found',
+    text: 'The page may have been moved or the address contains a typo.',
+    cta: 'Go to the home page',
+  },
   footer: {
     aboutText:
       'Russian cement manufacturer supplying OPC and PPC grades to India. Direct contracts, sea freight, full export documentation.',
