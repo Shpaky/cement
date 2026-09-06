@@ -33,7 +33,21 @@ try {
         reducedMotion: 'reduce',
       });
       await page.goto(`${server.url}${LOCALES[lang]}`, { waitUntil: 'networkidle' });
-      await page.evaluate(() => document.fonts.ready);
+      // Прокручиваем страницу, чтобы сработал loading="lazy", и ждём шрифты/картинки.
+      await page.evaluate(async () => {
+        const step = window.innerHeight;
+        for (let y = 0; y < document.body.scrollHeight; y += step) {
+          window.scrollTo(0, y);
+          await new Promise((r) => setTimeout(r, 60));
+        }
+        window.scrollTo(0, 0);
+        await document.fonts.ready;
+        await Promise.all(
+          Array.from(document.images)
+            .filter((img) => !img.complete)
+            .map((img) => new Promise((r) => img.addEventListener('load', r, { once: true }))),
+        );
+      });
       const file = `${outDir}/${section ? `${section}-` : ''}${lang}-${width}.png`;
       if (section) {
         const el = page.locator(`#${section}`);

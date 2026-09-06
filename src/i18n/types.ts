@@ -41,6 +41,14 @@ export interface Dictionary {
     badges: string[];
     illustrationAlt: string;
   };
+  about: {
+    eyebrow: string;
+    title: string;
+    lead: string;
+    paragraphs: string[];
+    highlights: { title: string; text: string }[];
+    imageAlt: string;
+  };
   company: {
     name: string;
     address: string;

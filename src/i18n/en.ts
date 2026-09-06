@@ -35,6 +35,30 @@ export const en = {
     badges: ['OPC 43 / 53', 'PPC', 'Bulk & 50 kg bags', 'FOB / CIF'],
     illustrationAlt: 'Stylised cement blocks in brand colours',
   },
+  about: {
+    eyebrow: 'About the company',
+    title: 'A Russian cement plant with a dedicated export desk for India',
+    lead: 'We produce Portland cement at our own plant and ship it to Indian buyers under direct contracts — without intermediaries.',
+    paragraphs: [
+      'TODO: Company name operates a full-cycle cement plant in Russia: own limestone quarry, rotary kilns, grinding and packing lines, and an in-house laboratory that tests every batch before dispatch.',
+      'Our export team works in Indian business hours, prepares documents for Indian customs and BIS requirements, and coordinates sea freight to the ports closest to your site.',
+    ],
+    highlights: [
+      {
+        title: 'Own production',
+        text: 'Full cycle from quarry to packed product, batch-level quality control.',
+      },
+      {
+        title: 'India-focused export',
+        text: 'Contracts in USD/INR, Incoterms FOB / CIF, documents for Indian customs.',
+      },
+      {
+        title: 'Predictable supply',
+        text: 'Planned monthly volumes and shipping schedules agreed in advance.',
+      },
+    ],
+    imageAlt: 'Cement plant: preheater tower, rotary kiln and storage silos (placeholder image)',
+  },
   company: {
     name: 'TODO: Company name', // TODO: официальное название компании
     address: 'TODO: Registered address, Russia', // TODO: адрес

@@ -1,0 +1,76 @@
+---
+import { Picture } from 'astro:assets';
+import plantImage from '../../assets/img/plant.png';
+import type { Dictionary } from '../../i18n';
+import Container from '../Container.astro';
+import SectionHeading from '../SectionHeading.astro';
+
+interface Props {
+  dict: Dictionary;
+}
+const { dict } = Astro.props;
+const t = dict.about;
+
+/** Иконки для highlights: завод, корабль, календарь (stroke=currentColor) */
+const icons = [
+  'M3 21V9l6 3V9l6 3V7l6 3v11H3Z M7 21v-4h3v4 M12 21v-4h3v4',
+  'M3 17l1.5 3h15L21 17H3Z M5 17V10h14v7 M9 10V6h6v4 M12 3v3',
+  'M4 5h16v15H4V5Z M4 10h16 M8 3v4 M16 3v4 M8 14h3v3H8Z',
+];
+---
+
+<section id="about" class="scroll-mt-20 py-16 md:py-24" aria-labelledby="about-title">
+  <Container>
+    <div class="grid gap-12 lg:grid-cols-12 lg:gap-16">
+      <div class="lg:col-span-6">
+        <SectionHeading eyebrow={t.eyebrow} title={t.title} lead={t.lead} class="mb-6 md:mb-8" />
+        <div class="flex flex-col gap-4 text-base leading-relaxed text-ink-700 md:text-lg">
+          {t.paragraphs.map((p) => <p>{p}</p>)}
+        </div>
+      </div>
+
+      <div class="lg:col-span-6">
+        <figure class="overflow-hidden rounded-lg shadow-card">
+          <Picture
+            src={plantImage}
+            alt={t.imageAlt}
+            widths={[480, 768, 1024, 1400]}
+            sizes="(min-width: 1024px) 45vw, 100vw"
+            formats={['avif', 'webp']}
+            fallbackFormat="webp"
+            loading="lazy"
+            class="h-auto w-full object-cover"
+          />
+        </figure>
+      </div>
+    </div>
+
+    <ul class="mt-12 grid gap-6 md:grid-cols-3 lg:mt-16">
+      {
+        t.highlights.map((h, i) => (
+          <li class="rounded-lg border border-ink-200 bg-white p-6">
+            <span
+              class="mb-4 inline-flex h-11 w-11 items-center justify-center rounded-md bg-brand-50 text-brand-600"
+              aria-hidden="true"
+            >
+              <svg
+                class="h-6 w-6"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.8"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                focusable="false"
+              >
+                <path d={icons[i]} />
+              </svg>
+            </span>
+            <h3 class="text-lg font-bold text-ink-900">{h.title}</h3>
+            <p class="mt-2 text-sm leading-relaxed text-ink-700">{h.text}</p>
+          </li>
+        ))
+      }
+    </ul>
+  </Container>
+</section>

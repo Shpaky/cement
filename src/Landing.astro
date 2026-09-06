@@ -4,6 +4,7 @@
  */
 import Footer from './components/Footer.astro';
 import Header from './components/Header.astro';
+import About from './components/sections/About.astro';
 import Hero from './components/sections/Hero.astro';
 import { getDict, type Lang } from './i18n';
 import Base from './layouts/Base.astro';
@@ -19,6 +20,7 @@ const dict = getDict(lang);
   <Header slot="header" lang={lang} dict={dict} />
 
   <Hero dict={dict} />
+  <About dict={dict} />
 
   <Footer slot="footer" lang={lang} dict={dict} />
 </Base>
