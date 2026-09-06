@@ -49,6 +49,23 @@ export interface Dictionary {
     highlights: { title: string; text: string }[];
     imageAlt: string;
   };
+  products: {
+    eyebrow: string;
+    title: string;
+    lead: string;
+    specLabels: { standard: string; strength: string; setting: string; applications: string };
+    items: {
+      name: string;
+      tagline: string;
+      standard: string;
+      strength: string;
+      setting: string;
+      applications: string[];
+    }[];
+    packaging: { title: string; items: { title: string; text: string }[] };
+    cta: string;
+    note: string;
+  };
   advantages: {
     eyebrow: string;
     title: string;

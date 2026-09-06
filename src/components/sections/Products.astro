@@ -1,0 +1,107 @@
+---
+import { sectionHref, type Dictionary } from '../../i18n';
+import Button from '../Button.astro';
+import Container from '../Container.astro';
+import SectionHeading from '../SectionHeading.astro';
+
+interface Props {
+  dict: Dictionary;
+}
+const { dict } = Astro.props;
+const t = dict.products;
+
+/** Иконки упаковки: мешок, биг-бэг, судно (stroke=currentColor) */
+const packIcons = [
+  'M8 3h8l1 4H7l1-4Z M6 7h12l1 14H5L6 7Z M10 11v6 M14 11v6',
+  'M6 8h12v13H6V8Z M9 8V5a3 3 0 0 1 6 0v3 M6 12h12',
+  'M3 17l1.5 3h15L21 17H3Z M5 17V10h14v7 M9 10V6h6v4 M12 3v3',
+];
+---
+
+<section id="products" class="scroll-mt-20 py-16 md:py-24" aria-labelledby="products-title">
+  <Container>
+    <SectionHeading eyebrow={t.eyebrow} title={t.title} lead={t.lead} />
+
+    <ul class="grid gap-6 md:grid-cols-2">
+      {
+        t.items.map((p) => (
+          <li class="flex flex-col overflow-hidden rounded-lg border border-ink-200 bg-white shadow-card">
+            <div class="bg-brand-800 px-6 py-5 text-white md:px-8">
+              <h3 class="text-2xl font-extrabold tracking-tight md:text-3xl">{p.name}</h3>
+              <p class="mt-1 text-sm text-brand-100 md:text-base">{p.tagline}</p>
+            </div>
+            <dl class="grid flex-1 gap-x-6 gap-y-4 px-6 py-6 sm:grid-cols-2 md:px-8">
+              <div class="sm:col-span-2">
+                <dt class="text-xs font-bold tracking-widest text-ink-500 uppercase">
+                  {t.specLabels.standard}
+                </dt>
+                <dd class="mt-1 text-sm font-semibold text-ink-900">{p.standard}</dd>
+              </div>
+              <div>
+                <dt class="text-xs font-bold tracking-widest text-ink-500 uppercase">
+                  {t.specLabels.strength}
+                </dt>
+                <dd class="mt-1 text-lg font-bold text-brand-800">{p.strength}</dd>
+              </div>
+              <div>
+                <dt class="text-xs font-bold tracking-widest text-ink-500 uppercase">
+                  {t.specLabels.setting}
+                </dt>
+                <dd class="mt-1 text-lg font-bold text-brand-800">{p.setting}</dd>
+              </div>
+              <div class="sm:col-span-2">
+                <dt class="text-xs font-bold tracking-widest text-ink-500 uppercase">
+                  {t.specLabels.applications}
+                </dt>
+                <dd class="mt-2 flex flex-wrap gap-2">
+                  {p.applications.map((a) => (
+                    <span class="rounded-full bg-brand-50 px-3 py-1 text-sm font-semibold text-brand-800">
+                      {a}
+                    </span>
+                  ))}
+                </dd>
+              </div>
+            </dl>
+          </li>
+        ))
+      }
+    </ul>
+
+    <div class="mt-12 rounded-lg bg-ink-50 p-6 md:p-8 lg:mt-16">
+      <h3 class="text-xl font-bold text-ink-900">{t.packaging.title}</h3>
+      <ul class="mt-6 grid gap-6 md:grid-cols-3">
+        {
+          t.packaging.items.map((item, i) => (
+            <li class="flex gap-4">
+              <span
+                class="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-md bg-white text-brand-600 shadow-card"
+                aria-hidden="true"
+              >
+                <svg
+                  class="h-6 w-6"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.8"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  focusable="false"
+                >
+                  <path d={packIcons[i]} />
+                </svg>
+              </span>
+              <div>
+                <p class="font-bold text-ink-900">{item.title}</p>
+                <p class="mt-1 text-sm leading-relaxed text-ink-700">{item.text}</p>
+              </div>
+            </li>
+          ))
+        }
+      </ul>
+      <div class="mt-8 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+        <p class="text-sm text-ink-500">{t.note}</p>
+        <Button href={sectionHref('contacts')} variant="secondary">{t.cta}</Button>
+      </div>
+    </div>
+  </Container>
+</section>
