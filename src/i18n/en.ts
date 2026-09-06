@@ -26,6 +26,15 @@ export const en = {
     faq: 'FAQ',
     contacts: 'Contacts',
   },
+  hero: {
+    eyebrow: 'Cement manufacturer · Russia → India',
+    title: 'Russian cement for India’s construction market',
+    lead: 'Direct supply of OPC and PPC cement from a Russian plant to Indian ports. Stable quality, competitive pricing, full export documentation.',
+    ctaCall: 'Call India office',
+    ctaWhatsapp: 'Write on WhatsApp',
+    badges: ['OPC 43 / 53', 'PPC', 'Bulk & 50 kg bags', 'FOB / CIF'],
+    illustrationAlt: 'Stylised cement blocks in brand colours',
+  },
   company: {
     name: 'TODO: Company name', // TODO: официальное название компании
     address: 'TODO: Registered address, Russia', // TODO: адрес

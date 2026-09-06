@@ -32,6 +32,15 @@ export interface Dictionary {
     brandTagline: string;
   };
   nav: Record<SectionId, string>;
+  hero: {
+    eyebrow: string;
+    title: string;
+    lead: string;
+    ctaCall: string;
+    ctaWhatsapp: string;
+    badges: string[];
+    illustrationAlt: string;
+  };
   company: {
     name: string;
     address: string;

@@ -4,7 +4,7 @@
  */
 interface Props {
   href?: string;
-  variant?: 'primary' | 'secondary' | 'ghost';
+  variant?: 'primary' | 'secondary' | 'ghost' | 'inverse' | 'inverse-outline';
   size?: 'md' | 'lg';
   class?: string;
   [key: string]: unknown;
@@ -23,6 +23,10 @@ const variants = {
   secondary:
     'border border-brand-600 bg-white text-brand-800 hover:bg-brand-50 active:bg-brand-100',
   ghost: 'text-brand-800 hover:bg-brand-50 active:bg-brand-100',
+  /* для тёмного (navy) фона */
+  inverse: 'bg-white text-brand-800 hover:bg-brand-50 active:bg-brand-100',
+  'inverse-outline':
+    'border border-white/60 text-white hover:border-white hover:bg-white/10 active:bg-white/20',
 };
 const classes = [base, sizes[size], variants[variant], className];
 ---
