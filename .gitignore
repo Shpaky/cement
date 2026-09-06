@@ -28,3 +28,6 @@ screenshots/
 playwright-report/
 test-results/
 .lighthouseci/
+
+# Claude Code local permissions
+.claude/settings.local.json*
