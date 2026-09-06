@@ -50,6 +50,8 @@ try {
       });
       const file = `${outDir}/${section ? `${section}-` : ''}${lang}-${width}.png`;
       if (section) {
+        // Липкий хедер перекрывал бы элементный снимок — скрываем его только для скриншота.
+        await page.addStyleTag({ content: 'header { visibility: hidden !important; }' });
         const el = page.locator(`#${section}`);
         await el.scrollIntoViewIfNeeded();
         await el.screenshot({ path: file });

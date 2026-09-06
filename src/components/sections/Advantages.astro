@@ -1,0 +1,58 @@
+---
+import type { Dictionary } from '../../i18n';
+import Container from '../Container.astro';
+import SectionHeading from '../SectionHeading.astro';
+
+interface Props {
+  dict: Dictionary;
+}
+const { dict } = Astro.props;
+const t = dict.advantages;
+
+/** Иконки (stroke=currentColor): щит-галочка, ценник, слои, корабль, документ, наушники */
+const icons = [
+  'M12 3l8 3v6c0 5-3.5 8.5-8 9-4.5-.5-8-4-8-9V6l8-3Z M9 12l2 2 4-4',
+  'M3 12V4h8l10 10-8 8L3 12Z M7 8h.01',
+  'M12 3 3 8l9 5 9-5-9-5Z M3 12l9 5 9-5 M3 16l9 5 9-5',
+  'M3 17l1.5 3h15L21 17H3Z M5 17V10h14v7 M9 10V6h6v4 M12 3v3',
+  'M6 3h9l5 5v13H6V3Z M14 3v6h6 M9 13h6 M9 17h6',
+  'M4 14v-2a8 8 0 0 1 16 0v2 M4 14h3v5H4v-5Z M17 14h3v5h-3v-5Z M12 22h4',
+];
+---
+
+<section
+  id="advantages"
+  class="scroll-mt-20 bg-ink-50 py-16 md:py-24"
+  aria-labelledby="advantages-title"
+>
+  <Container>
+    <SectionHeading eyebrow={t.eyebrow} title={t.title} lead={t.lead} align="center" />
+    <ul class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+      {
+        t.items.map((item, i) => (
+          <li class="group rounded-lg border border-ink-200 bg-white p-6 shadow-card transition-shadow duration-300 ease-out-soft hover:shadow-card-hover md:p-8">
+            <span
+              class="mb-5 inline-flex h-12 w-12 items-center justify-center rounded-md bg-brand-800 text-white transition-colors duration-300 group-hover:bg-brand-600"
+              aria-hidden="true"
+            >
+              <svg
+                class="h-6 w-6"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.8"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                focusable="false"
+              >
+                <path d={icons[i]} />
+              </svg>
+            </span>
+            <h3 class="text-lg font-bold text-ink-900 md:text-xl">{item.title}</h3>
+            <p class="mt-2 text-sm leading-relaxed text-ink-700 md:text-base">{item.text}</p>
+          </li>
+        ))
+      }
+    </ul>
+  </Container>
+</section>

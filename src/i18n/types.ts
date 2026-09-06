@@ -49,6 +49,12 @@ export interface Dictionary {
     highlights: { title: string; text: string }[];
     imageAlt: string;
   };
+  advantages: {
+    eyebrow: string;
+    title: string;
+    lead: string;
+    items: { title: string; text: string }[];
+  };
   company: {
     name: string;
     address: string;

@@ -59,6 +59,37 @@ export const en = {
     ],
     imageAlt: 'Cement plant: preheater tower, rotary kiln and storage silos (placeholder image)',
   },
+  advantages: {
+    eyebrow: 'Why us',
+    title: 'What Indian buyers get from working with us directly',
+    lead: 'No trading intermediaries: factory price, factory quality control and one responsible partner from contract to port.',
+    items: [
+      {
+        title: 'Certified quality',
+        text: 'Every batch is tested in our laboratory; certificates of analysis (COA) ship with each consignment.',
+      },
+      {
+        title: 'Factory pricing',
+        text: 'Direct contracts with the manufacturer — no trader margin. Prices fixed per shipment in USD or INR.',
+      },
+      {
+        title: 'Volumes for large projects',
+        text: 'Monthly volumes from a few thousand tonnes to full-vessel lots, planned quarters ahead.',
+      },
+      {
+        title: 'Logistics to Indian ports',
+        text: 'FOB or CIF delivery to Mundra, Nhava Sheva, Chennai and other ports — we arrange the vessel and insurance.',
+      },
+      {
+        title: 'Full export documentation',
+        text: 'Certificate of origin, packing list, COA, bill of lading and the documents Indian customs expects.',
+      },
+      {
+        title: 'Support in your time zone',
+        text: 'Export managers work Indian business hours and answer in English on phone, e-mail, WhatsApp and Telegram.',
+      },
+    ],
+  },
   company: {
     name: 'TODO: Company name', // TODO: официальное название компании
     address: 'TODO: Registered address, Russia', // TODO: адрес
