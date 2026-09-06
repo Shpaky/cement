@@ -1,0 +1,32 @@
+---
+/**
+ * Логотип-плейсхолдер: знак (стилизованный блок/мешок цемента) + словесная часть.
+ * TODO: заменить реальным логотипом после получения брендбука.
+ */
+interface Props {
+  brandLine: string;
+  tagline: string;
+  href: string;
+  class?: string;
+}
+const { brandLine, tagline, href, class: className = '' } = Astro.props;
+---
+
+<a
+  href={href}
+  class:list={[
+    'inline-flex items-center gap-3 rounded-md text-brand-800 hover:text-brand-600',
+    className,
+  ]}
+>
+  <svg viewBox="0 0 40 40" class="h-9 w-9 shrink-0" aria-hidden="true" focusable="false">
+    <path fill="currentColor" d="M20 2 4 11v18l16 9 16-9V11L20 2Z" opacity="0.15"></path>
+    <path fill="currentColor" d="M20 2 4 11l16 9 16-9L20 2Z"></path>
+    <path class="fill-brand-500" d="M4 11v18l16 9V20L4 11Z"></path>
+    <path class="fill-brand-400" d="M36 11v18l-16 9V20l16-9Z" opacity="0.85"></path>
+  </svg>
+  <span class="flex flex-col leading-none whitespace-nowrap">
+    <span class="text-xs font-bold tracking-widest uppercase">{brandLine}</span>
+    <span class="text-lg font-extrabold">{tagline}</span>
+  </span>
+</a>

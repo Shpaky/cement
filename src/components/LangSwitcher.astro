@@ -1,0 +1,41 @@
+---
+import { LANGS, LANG_NAMES, LANG_SHORT, localePath, type Lang } from '../i18n';
+
+interface Props {
+  current: Lang;
+  label: string;
+  /** compact — короткие коды (мобильный хедер), full — самоназвания. */
+  variant?: 'compact' | 'full';
+  class?: string;
+}
+const { current, label, variant = 'full', class: className = '' } = Astro.props;
+---
+
+<nav aria-label={label} class={className}>
+  <ul class:list={['flex items-center', variant === 'compact' ? 'gap-0.5' : 'gap-1']}>
+    {
+      LANGS.map((lang) => {
+        const active = lang === current;
+        return (
+          <li>
+            <a
+              href={localePath(lang)}
+              hreflang={lang}
+              lang={lang}
+              aria-current={active ? 'page' : undefined}
+              class:list={[
+                'inline-flex items-center rounded-sm px-2 py-1 text-sm font-semibold transition-colors duration-200',
+                active
+                  ? 'bg-brand-50 text-brand-800'
+                  : 'text-ink-700 hover:bg-ink-100 hover:text-ink-900',
+                variant === 'compact' && 'min-h-9 min-w-9 justify-center',
+              ]}
+            >
+              {variant === 'compact' ? LANG_SHORT[lang] : LANG_NAMES[lang]}
+            </a>
+          </li>
+        );
+      })
+    }
+  </ul>
+</nav>

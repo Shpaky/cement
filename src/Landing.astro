@@ -1,0 +1,27 @@
+---
+/**
+ * Единая сборка лендинга для всех локалей: порядок секций задаётся здесь.
+ */
+import Footer from './components/Footer.astro';
+import Header from './components/Header.astro';
+import Container from './components/Container.astro';
+import { getDict, type Lang } from './i18n';
+import Base from './layouts/Base.astro';
+
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+const dict = getDict(lang);
+---
+
+<Base lang={lang} dict={dict}>
+  <Header slot="header" lang={lang} dict={dict} />
+
+  {/* Временный h1 до секции Hero (шаг 2) */}
+  <Container class="py-16">
+    <h1 class="text-4xl font-extrabold tracking-tight text-brand-800">{dict.meta.title}</h1>
+  </Container>
+
+  <Footer slot="footer" lang={lang} dict={dict} />
+</Base>

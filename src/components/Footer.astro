@@ -1,0 +1,87 @@
+---
+import { company } from '../data/company';
+import { SECTION_IDS, localePath, sectionHref, type Dictionary, type Lang } from '../i18n';
+import Container from './Container.astro';
+import Logo from './Logo.astro';
+
+interface Props {
+  lang: Lang;
+  dict: Dictionary;
+}
+const { lang, dict } = Astro.props;
+const year = new Date().getFullYear();
+
+const contactLinks = [
+  { label: dict.footer.phoneRu, text: company.phones.ru.display, href: company.phones.ru.href },
+  { label: dict.footer.phoneIn, text: company.phones.in.display, href: company.phones.in.href },
+  { label: dict.footer.email, text: company.email, href: `mailto:${company.email}` },
+  { label: dict.footer.whatsapp, text: 'WhatsApp', href: company.whatsapp, external: true },
+  { label: dict.footer.telegram, text: 'Telegram', href: company.telegram, external: true },
+];
+---
+
+<footer class="border-t border-ink-200 bg-ink-50">
+  <Container class="py-12 lg:py-16">
+    <div class="grid gap-10 md:grid-cols-2 lg:grid-cols-4">
+      <div class="lg:col-span-2">
+        <Logo
+          href={localePath(lang)}
+          brandLine={dict.common.brandLine}
+          tagline={dict.common.brandTagline}
+        />
+        <p class="mt-4 max-w-md text-sm leading-relaxed text-ink-700">{dict.footer.aboutText}</p>
+        <address class="mt-4 text-sm text-ink-500 not-italic">
+          {dict.company.name}<br />
+          {dict.company.address}
+        </address>
+      </div>
+
+      <nav aria-label={dict.common.footerNav}>
+        <h2 class="text-sm font-bold tracking-widest text-ink-900 uppercase">
+          {dict.footer.navTitle}
+        </h2>
+        <ul class="mt-4 flex flex-col gap-2">
+          {
+            SECTION_IDS.map((id) => (
+              <li>
+                <a href={sectionHref(id)} class="text-sm text-ink-700 hover:text-brand-600">
+                  {dict.nav[id]}
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </nav>
+
+      <div>
+        <h2 class="text-sm font-bold tracking-widest text-ink-900 uppercase">
+          {dict.footer.contactsTitle}
+        </h2>
+        <ul class="mt-4 flex flex-col gap-2">
+          {
+            contactLinks.map((c) => (
+              <li class="text-sm">
+                <span class="text-ink-500">{c.label}: </span>
+                <a
+                  href={c.href}
+                  class="font-semibold text-ink-900 hover:text-brand-600"
+                  rel={c.external ? 'noopener' : undefined}
+                  target={c.external ? '_blank' : undefined}
+                >
+                  {c.text}
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+    </div>
+
+    <div
+      class="mt-10 flex flex-col gap-2 border-t border-ink-200 pt-6 text-xs text-ink-500 sm:flex-row sm:items-center sm:justify-between"
+    >
+      <p>© {year} {dict.company.name}. {dict.footer.rights}</p>
+      {dict.footer.draftNotice && <p>{dict.footer.draftNotice}</p>}
+    </div>
+  </Container>
+</footer>

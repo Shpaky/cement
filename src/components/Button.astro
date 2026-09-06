@@ -1,0 +1,40 @@
+---
+/**
+ * Кнопка / кнопка-ссылка. Если передан `href` — рендерится <a>, иначе <button>.
+ */
+interface Props {
+  href?: string;
+  variant?: 'primary' | 'secondary' | 'ghost';
+  size?: 'md' | 'lg';
+  class?: string;
+  [key: string]: unknown;
+}
+
+const { href, variant = 'primary', size = 'md', class: className = '', ...rest } = Astro.props;
+
+const base =
+  'inline-flex items-center justify-center gap-2 rounded-md font-semibold whitespace-nowrap transition-colors duration-200 ease-out-soft';
+const sizes = {
+  md: 'h-11 px-5 text-sm',
+  lg: 'h-13 px-7 text-base',
+};
+const variants = {
+  primary: 'bg-brand-600 text-white hover:bg-brand-800 active:bg-brand-900',
+  secondary:
+    'border border-brand-600 bg-white text-brand-800 hover:bg-brand-50 active:bg-brand-100',
+  ghost: 'text-brand-800 hover:bg-brand-50 active:bg-brand-100',
+};
+const classes = [base, sizes[size], variants[variant], className];
+---
+
+{
+  href ? (
+    <a href={href} class:list={classes} {...rest}>
+      <slot />
+    </a>
+  ) : (
+    <button type="button" class:list={classes} {...rest}>
+      <slot />
+    </button>
+  )
+}

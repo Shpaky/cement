@@ -1,0 +1,152 @@
+---
+import { SECTION_IDS, localePath, sectionHref, type Dictionary, type Lang } from '../i18n';
+import Button from './Button.astro';
+import Container from './Container.astro';
+import LangSwitcher from './LangSwitcher.astro';
+import Logo from './Logo.astro';
+
+interface Props {
+  lang: Lang;
+  dict: Dictionary;
+}
+const { lang, dict } = Astro.props;
+const navItems = SECTION_IDS.filter((id) => id !== 'contacts');
+---
+
+<header class="sticky top-0 z-40 border-b border-ink-200 bg-white/95 backdrop-blur">
+  <Container class="flex h-16 items-center justify-between gap-4 lg:h-20">
+    <Logo
+      href={localePath(lang)}
+      brandLine={dict.common.brandLine}
+      tagline={dict.common.brandTagline}
+    />
+
+    <nav aria-label={dict.common.mainNav} class="hidden lg:block">
+      <ul class="flex items-center gap-1">
+        {
+          navItems.map((id) => (
+            <li>
+              <a
+                href={sectionHref(id)}
+                class="inline-flex h-10 items-center rounded-md px-3 text-sm font-semibold text-ink-700 transition-colors duration-200 hover:bg-brand-50 hover:text-brand-800"
+              >
+                {dict.nav[id]}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+
+    <div class="flex items-center gap-2 lg:gap-4">
+      <LangSwitcher
+        current={lang}
+        label={dict.common.language}
+        variant="compact"
+        class="lg:hidden"
+      />
+      <LangSwitcher current={lang} label={dict.common.language} class="hidden lg:block" />
+      <div class="hidden md:block">
+        <Button href={sectionHref('contacts')}>{dict.common.contactCta}</Button>
+      </div>
+
+      <button
+        type="button"
+        class="inline-flex h-11 w-11 items-center justify-center rounded-md text-brand-800 hover:bg-brand-50 lg:hidden"
+        popovertarget="mobile-menu"
+        aria-controls="mobile-menu"
+        aria-expanded="false"
+        data-menu-button
+      >
+        <span class="sr-only">{dict.common.menuOpen}</span>
+        <svg
+          class="h-6 w-6"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          aria-hidden="true"
+          focusable="false"
+        >
+          <path d="M4 7h16M4 12h16M4 17h16"></path>
+        </svg>
+      </button>
+    </div>
+  </Container>
+
+  <!-- Мобильное меню: Popover API — top layer, Esc и клик вне закрывают без JS -->
+  <div
+    id="mobile-menu"
+    popover="auto"
+    class="inset-x-0 top-0 bottom-auto m-0 h-auto max-h-svh w-full overflow-y-auto border-0 border-b border-ink-200 bg-white p-0 shadow-card backdrop:bg-brand-900/40 lg:hidden"
+  >
+    <Container class="flex h-16 items-center justify-between">
+      <Logo
+        href={localePath(lang)}
+        brandLine={dict.common.brandLine}
+        tagline={dict.common.brandTagline}
+      />
+      <button
+        type="button"
+        class="inline-flex h-11 w-11 items-center justify-center rounded-md text-brand-800 hover:bg-brand-50"
+        popovertarget="mobile-menu"
+        popovertargetaction="hide"
+      >
+        <span class="sr-only">{dict.common.menuClose}</span>
+        <svg
+          class="h-6 w-6"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          aria-hidden="true"
+          focusable="false"
+        >
+          <path d="M6 6l12 12M18 6L6 18"></path>
+        </svg>
+      </button>
+    </Container>
+    <Container class="pb-6">
+      <nav aria-label={dict.common.mainNav}>
+        <ul class="flex flex-col">
+          {
+            navItems.map((id) => (
+              <li>
+                <a
+                  href={sectionHref(id)}
+                  class="flex min-h-12 items-center border-b border-ink-100 text-base font-semibold text-ink-900 hover:text-brand-600"
+                >
+                  {dict.nav[id]}
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </nav>
+      <div class="mt-6 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+        <Button href={sectionHref('contacts')} size="lg" class="w-full sm:w-auto">
+          {dict.common.contactCta}
+        </Button>
+        <LangSwitcher current={lang} label={dict.common.language} />
+      </div>
+    </Container>
+  </div>
+</header>
+
+<script>
+  // Единственный клиентский скрипт: синхронизирует aria-expanded с состоянием
+  // popover и закрывает меню при переходе по якорю.
+  const button = document.querySelector<HTMLButtonElement>('[data-menu-button]');
+  const menu = document.getElementById('mobile-menu');
+  if (button && menu) {
+    menu.addEventListener('toggle', (event) => {
+      const open = (event as ToggleEvent).newState === 'open';
+      button.setAttribute('aria-expanded', String(open));
+    });
+    menu.querySelectorAll('a[href^="#"]').forEach((link) => {
+      link.addEventListener('click', () => menu.hidePopover());
+    });
+  }
+</script>

@@ -1,14 +1,26 @@
 ---
 import '../styles/global.css';
+import manropeLatin from '../assets/fonts/manrope-latin.woff2';
+import manropeCyrillic from '../assets/fonts/manrope-cyrillic.woff2';
+import notoDevanagari from '../assets/fonts/noto-sans-devanagari.woff2';
+import { LANGS, LOCALE_TAGS, localeUrl, type Dictionary, type Lang } from '../i18n';
 
 interface Props {
-  lang: 'en' | 'hi' | 'ru';
-  title: string;
-  description: string;
+  lang: Lang;
+  dict: Dictionary;
 }
 
-const { lang, title, description } = Astro.props;
+const { lang, dict } = Astro.props;
 const base = import.meta.env.BASE_URL;
+const canonical = localeUrl(lang);
+
+/** Предзагрузка только тех субсетов, что реально нужны локали. */
+const preloadFonts =
+  lang === 'hi'
+    ? [notoDevanagari, manropeLatin]
+    : lang === 'ru'
+      ? [manropeCyrillic, manropeLatin]
+      : [manropeLatin];
 ---
 
 <!doctype html>
@@ -16,14 +28,47 @@ const base = import.meta.env.BASE_URL;
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>{title}</title>
-    <meta name="description" content={description} />
+    <title>{dict.meta.title}</title>
+    <meta name="description" content={dict.meta.description} />
+    <link rel="canonical" href={canonical} />
+    {LANGS.map((l) => <link rel="alternate" hreflang={LOCALE_TAGS[l]} href={localeUrl(l)} />)}
+    <link rel="alternate" hreflang="x-default" href={localeUrl('en')} />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content={dict.common.brandLine} />
+    <meta property="og:title" content={dict.meta.title} />
+    <meta property="og:description" content={dict.meta.description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:locale" content={LOCALE_TAGS[lang].replace('-', '_')} />
+    {
+      LANGS.filter((l) => l !== lang).map((l) => (
+        <meta property="og:locale:alternate" content={LOCALE_TAGS[l].replace('-', '_')} />
+      ))
+    }
+
     <link rel="icon" type="image/svg+xml" href={`${base}favicon.svg`} />
+    <link rel="sitemap" href={`${base}sitemap-index.xml`} />
+    {/* tokens-ignore: theme-color по спецификации принимает только литерал цвета */}
+    <meta name="theme-color" content="#203b80" /><!-- tokens-ignore: = --color-brand-800 -->
     <meta name="generator" content={Astro.generator} />
+
+    {
+      preloadFonts.map((href) => (
+        <link rel="preload" as="font" type="font/woff2" href={href} crossorigin />
+      ))
+    }
   </head>
-  <body>
-    <main id="main">
+  <body class="flex min-h-svh flex-col">
+    <a
+      href="#main"
+      class="sr-only z-50 rounded-md bg-brand-800 px-4 py-2 text-white focus:not-sr-only focus:fixed focus:top-3 focus:left-3"
+    >
+      {dict.common.skipToContent}
+    </a>
+    <slot name="header" />
+    <main id="main" class="flex-1">
       <slot />
     </main>
+    <slot name="footer" />
   </body>
 </html>

@@ -1,0 +1,27 @@
+---
+/**
+ * Заголовок секции: надзаголовок (eyebrow) + h2 + лид.
+ */
+interface Props {
+  eyebrow?: string;
+  title: string;
+  lead?: string;
+  align?: 'left' | 'center';
+  class?: string;
+}
+const { eyebrow, title, lead, align = 'left', class: className = '' } = Astro.props;
+---
+
+<div
+  class:list={['mb-10 max-w-3xl md:mb-14', align === 'center' && 'mx-auto text-center', className]}
+>
+  {
+    eyebrow && (
+      <p class="mb-3 text-sm font-bold tracking-widest text-brand-500 uppercase">{eyebrow}</p>
+    )
+  }
+  <h2 class="text-3xl font-extrabold tracking-tight text-brand-800 md:text-4xl lg:text-5xl">
+    {title}
+  </h2>
+  {lead && <p class="mt-4 text-lg leading-relaxed text-ink-700 md:text-xl">{lead}</p>}
+</div>
