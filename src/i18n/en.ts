@@ -114,6 +114,44 @@ export const en = {
     cta: 'Request price list',
     note: 'TODO: confirm the grade list and figures with the plant laboratory before publishing.',
   },
+  certificates: {
+    eyebrow: 'Certificates & standards',
+    title: 'Quality you can verify before the vessel sails',
+    lead: 'Production is certified to Russian and international standards; each consignment ships with laboratory results and origin documents accepted by Indian customs.',
+    standards: [
+      {
+        code: 'GOST 31108',
+        title: 'Russian national standard',
+        text: 'General construction cements — composition, strength classes and test methods.',
+      },
+      {
+        code: 'EN 197-1',
+        title: 'European harmonised standard',
+        text: 'CEM I / CEM II classification used for export contracts and third-party inspection.',
+      },
+      {
+        code: 'IS 269 / IS 1489',
+        title: 'Indian standards (BIS)',
+        text: 'Conformity of OPC 43/53 and PPC grades to BIS requirements; BIS licence status: TODO.',
+      },
+      {
+        code: 'ISO 9001',
+        title: 'Quality management',
+        text: 'Certified quality management system at the plant; annual surveillance audits.',
+      },
+    ],
+    documentsTitle: 'Documents per shipment',
+    documents: [
+      'Certificate of Analysis (COA) from the plant laboratory',
+      'Certificate of Origin (Chamber of Commerce)',
+      'Commercial invoice & packing list',
+      'Bill of Lading',
+      'Third-party inspection report (SGS / Bureau Veritas) on request',
+    ],
+    scansTitle: 'Certificate scans',
+    scansPlaceholder: 'Scan placeholder',
+    note: 'TODO: replace placeholders with real certificate scans and licence numbers.',
+  },
   advantages: {
     eyebrow: 'Why us',
     title: 'What Indian buyers get from working with us directly',

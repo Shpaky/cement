@@ -66,6 +66,17 @@ export interface Dictionary {
     cta: string;
     note: string;
   };
+  certificates: {
+    eyebrow: string;
+    title: string;
+    lead: string;
+    standards: { code: string; title: string; text: string }[];
+    documentsTitle: string;
+    documents: string[];
+    scansTitle: string;
+    scansPlaceholder: string;
+    note: string;
+  };
   advantages: {
     eyebrow: string;
     title: string;

@@ -6,6 +6,7 @@ import Footer from './components/Footer.astro';
 import Header from './components/Header.astro';
 import About from './components/sections/About.astro';
 import Advantages from './components/sections/Advantages.astro';
+import Certificates from './components/sections/Certificates.astro';
 import Hero from './components/sections/Hero.astro';
 import Products from './components/sections/Products.astro';
 import { getDict, type Lang } from './i18n';
@@ -25,6 +26,7 @@ const dict = getDict(lang);
   <About dict={dict} />
   <Products dict={dict} />
   <Advantages dict={dict} />
+  <Certificates dict={dict} />
 
   <Footer slot="footer" lang={lang} dict={dict} />
 </Base>
