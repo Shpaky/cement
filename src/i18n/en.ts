@@ -201,6 +201,49 @@ export const en = {
     scansPlaceholder: 'Scan placeholder',
     note: 'TODO: replace placeholders with real certificate scans and licence numbers.',
   },
+  facts: {
+    label: 'Key figures',
+    items: [
+      { value: '1.2M t', label: 'annual capacity (TODO)' },
+      { value: '20+', label: 'years in production (TODO)' },
+      { value: '300k t', label: 'shipped for export (TODO)' },
+      { value: '4', label: 'Indian ports served' },
+    ],
+    note: 'TODO: replace placeholder figures with audited numbers from the plant.',
+  },
+  faq: {
+    eyebrow: 'FAQ',
+    title: 'Questions Indian buyers ask first',
+    lead: 'Short answers on ordering, quality and delivery. Anything else — call or write, we answer in Indian business hours.',
+    items: [
+      {
+        q: 'What is the minimum order?',
+        a: 'Container lots start from about 500 t (TODO). Bulk vessel shipments are planned from 5,000 t per lot. Smaller trial batches can be arranged for qualification tests.',
+      },
+      {
+        q: 'Can you supply cement matching IS 269 / IS 1489?',
+        a: 'Yes. OPC 43/53 and PPC grades are produced to GOST 31108 and tested against the corresponding IS requirements; a certificate of analysis is issued per batch. BIS licence status: TODO.',
+      },
+      {
+        q: 'How long does delivery take?',
+        a: 'Rail to the loading port takes about a week; sea transit to western Indian ports is roughly 25–35 days (TODO). Schedules are agreed a quarter ahead for regular volumes.',
+      },
+      {
+        q: 'What are the payment terms?',
+        a: 'Letter of credit or bank transfer in USD or INR; advance and balance shares are negotiated per contract (TODO).',
+      },
+      {
+        q: 'Do you offer samples and third-party inspection?',
+        a: 'Yes. Samples are shipped by courier for lab qualification, and SGS or Bureau Veritas inspection at loading can be arranged at the buyer’s request.',
+      },
+      {
+        q: 'Which documents do we receive?',
+        a: 'Commercial invoice, packing list, certificate of origin, certificate of analysis, bill of lading and insurance certificate (for CIF).',
+      },
+    ],
+    moreTitle: 'Have a question we haven’t covered?',
+    moreCta: 'Ask on WhatsApp',
+  },
   advantages: {
     eyebrow: 'Why us',
     title: 'What Indian buyers get from working with us directly',

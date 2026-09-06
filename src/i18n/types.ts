@@ -86,6 +86,19 @@ export interface Dictionary {
     scansPlaceholder: string;
     note: string;
   };
+  facts: {
+    label: string;
+    items: { value: string; label: string }[];
+    note: string;
+  };
+  faq: {
+    eyebrow: string;
+    title: string;
+    lead: string;
+    items: { q: string; a: string }[];
+    moreTitle: string;
+    moreCta: string;
+  };
   advantages: {
     eyebrow: string;
     title: string;

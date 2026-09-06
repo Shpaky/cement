@@ -1,0 +1,68 @@
+---
+import { company } from '../../data/company';
+import type { Dictionary } from '../../i18n';
+import Button from '../Button.astro';
+import Container from '../Container.astro';
+import SectionHeading from '../SectionHeading.astro';
+
+interface Props {
+  dict: Dictionary;
+}
+const { dict } = Astro.props;
+const t = dict.faq;
+---
+
+<section id="faq" class="scroll-mt-20 py-16 md:py-24" aria-labelledby="faq-title">
+  <Container class="grid gap-10 lg:grid-cols-12 lg:gap-16">
+    <div class="lg:col-span-4">
+      <SectionHeading
+        id="faq-title"
+        eyebrow={t.eyebrow}
+        title={t.title}
+        lead={t.lead}
+        class="mb-6"
+      />
+      <div class="rounded-lg bg-ink-50 p-6">
+        <p class="font-bold text-ink-900">{t.moreTitle}</p>
+        <Button
+          href={company.whatsapp}
+          variant="secondary"
+          class="mt-4"
+          target="_blank"
+          rel="noopener"
+        >
+          {t.moreCta}
+        </Button>
+      </div>
+    </div>
+
+    <!-- Аккордеон на <details>: клавиатура и семантика без JS -->
+    <div class="lg:col-span-8">
+      <div class="divide-y divide-ink-200 border-y border-ink-200">
+        {
+          t.items.map((item, i) => (
+            <details class="group" name="faq" open={i === 0}>
+              <summary class="flex cursor-pointer list-none items-center justify-between gap-4 py-5 text-left text-base font-bold text-ink-900 hover:text-brand-600 md:text-lg">
+                <span>{item.q}</span>
+                <svg
+                  class="h-5 w-5 shrink-0 text-brand-600 transition-transform duration-300 ease-out-soft group-open:rotate-180"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  aria-hidden="true"
+                  focusable="false"
+                >
+                  <path d="m6 9 6 6 6-6" />
+                </svg>
+              </summary>
+              <p class="pb-5 text-base leading-relaxed text-ink-700">{item.a}</p>
+            </details>
+          ))
+        }
+      </div>
+    </div>
+  </Container>
+</section>

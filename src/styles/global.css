@@ -137,6 +137,14 @@
     @apply bg-brand-200 text-ink-900;
   }
 
+  /* Аккордеоны на <details>: собственный маркер рисуем в разметке */
+  summary::-webkit-details-marker {
+    display: none;
+  }
+  summary::marker {
+    content: '';
+  }
+
   /* Все анимации и переходы отключаются при prefers-reduced-motion */
   @media (prefers-reduced-motion: reduce) {
     html {
