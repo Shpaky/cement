@@ -114,6 +114,55 @@ export const en = {
     cta: 'Request price list',
     note: 'TODO: confirm the grade list and figures with the plant laboratory before publishing.',
   },
+  logistics: {
+    eyebrow: 'Logistics',
+    title: 'From the plant gate to an Indian port — one supply chain',
+    lead: 'We manage the whole route: rail to the loading port, vessel chartering or container booking, insurance and the paperwork Indian customs expects on arrival.',
+    routeLabel: 'Delivery route',
+    steps: [
+      {
+        title: 'Plant',
+        text: 'Batch tested, bagged or loaded in bulk, COA issued.',
+      },
+      {
+        title: 'Rail to port',
+        text: 'Covered wagons or containers to the loading port in Russia.',
+      },
+      {
+        title: 'Sea freight',
+        text: 'Bulk carrier or container vessel; insurance under CIF.',
+      },
+      {
+        title: 'Indian port & customs',
+        text: 'Discharge at Mundra, Nhava Sheva, Chennai or Kolkata; documents ready for clearance.',
+      },
+    ],
+    details: [
+      {
+        title: 'Incoterms & payment',
+        items: [
+          'FOB loading port',
+          'CFR / CIF Indian port',
+          'USD or INR contracts',
+          'L/C or T/T (TODO)',
+        ],
+      },
+      {
+        title: 'Indian ports',
+        items: ['Mundra (Gujarat)', 'Nhava Sheva / JNPT (Mumbai)', 'Chennai', 'Kolkata / Haldia'],
+      },
+      {
+        title: 'Transit & schedule',
+        items: [
+          'Sea transit: TODO 25–35 days',
+          'Monthly vessel or container lots',
+          'Schedules agreed a quarter ahead',
+          'Tracking and ETA updates by e-mail',
+        ],
+      },
+    ],
+    note: 'TODO: confirm loading ports, transit times and payment terms with the export department.',
+  },
   certificates: {
     eyebrow: 'Certificates & standards',
     title: 'Quality you can verify before the vessel sails',

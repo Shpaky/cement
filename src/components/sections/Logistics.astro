@@ -1,0 +1,89 @@
+---
+import type { Dictionary } from '../../i18n';
+import Container from '../Container.astro';
+import SectionHeading from '../SectionHeading.astro';
+
+interface Props {
+  dict: Dictionary;
+}
+const { dict } = Astro.props;
+const t = dict.logistics;
+
+/** Иконки шагов: завод, вагон, судно, якорь/порт (stroke=currentColor) */
+const stepIcons = [
+  'M3 21V9l6 3V9l6 3V7l6 3v11H3Z M7 21v-4h3v4 M12 21v-4h3v4',
+  'M4 7h16v9H4V7Z M2 16h20 M7 20h.01 M17 20h.01 M4 12h16',
+  'M3 17l1.5 3h15L21 17H3Z M5 17V10h14v7 M9 10V6h6v4 M12 3v3',
+  'M12 3a2 2 0 1 0 0 4 2 2 0 0 0 0-4Z M12 7v14 M5 12H3a9 9 0 0 0 18 0h-2 M8 21h8',
+];
+---
+
+<section
+  id="logistics"
+  class="scroll-mt-20 bg-ink-50 py-16 md:py-24"
+  aria-labelledby="logistics-title"
+>
+  <Container>
+    <SectionHeading id="logistics-title" eyebrow={t.eyebrow} title={t.title} lead={t.lead} />
+
+    <!-- Степпер маршрута: вертикальный на мобильном, горизонтальный от lg -->
+    <ol class="relative grid gap-8 lg:grid-cols-4 lg:gap-6" aria-label={t.routeLabel}>
+      {
+        t.steps.map((step, i) => (
+          <li class="relative flex gap-4 lg:flex-col lg:gap-5">
+            {i < t.steps.length - 1 && (
+              <span
+                class="absolute top-14 bottom-0 left-6 w-px bg-brand-200 lg:top-6 lg:-right-6 lg:bottom-auto lg:left-14 lg:h-px lg:w-auto"
+                aria-hidden="true"
+              />
+            )}
+            <span
+              class="relative inline-flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-brand-800 text-white shadow-card"
+              aria-hidden="true"
+            >
+              <svg
+                class="h-6 w-6"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.8"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                focusable="false"
+              >
+                <path d={stepIcons[i]} />
+              </svg>
+            </span>
+            <div>
+              <p class="text-xs font-bold tracking-widest text-brand-600 uppercase">0{i + 1}</p>
+              <h3 class="mt-1 text-lg font-bold text-ink-900">{step.title}</h3>
+              <p class="mt-1 text-sm leading-relaxed text-ink-700">{step.text}</p>
+            </div>
+          </li>
+        ))
+      }
+    </ol>
+
+    <div class="mt-12 grid gap-6 md:grid-cols-3 lg:mt-16">
+      {
+        t.details.map((d) => (
+          <div class="rounded-lg border border-ink-200 bg-white p-6 shadow-card">
+            <h3 class="text-lg font-bold text-ink-900">{d.title}</h3>
+            <ul class="mt-4 flex flex-col gap-2">
+              {d.items.map((item) => (
+                <li class="flex gap-3 text-sm text-ink-700">
+                  <span
+                    class="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-brand-500"
+                    aria-hidden="true"
+                  />
+                  <span>{item}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))
+      }
+    </div>
+    <p class="mt-6 text-sm text-ink-500">{t.note}</p>
+  </Container>
+</section>

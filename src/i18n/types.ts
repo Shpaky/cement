@@ -66,6 +66,15 @@ export interface Dictionary {
     cta: string;
     note: string;
   };
+  logistics: {
+    eyebrow: string;
+    title: string;
+    lead: string;
+    routeLabel: string;
+    steps: { title: string; text: string }[];
+    details: { title: string; items: string[] }[];
+    note: string;
+  };
   certificates: {
     eyebrow: string;
     title: string;
