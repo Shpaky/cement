@@ -6,12 +6,16 @@
 import Footer from './components/Footer.astro';
 import Header from './components/Header.astro';
 import BagCalculator from './components/home-builders/BagCalculator.astro';
+import BuildSteps from './components/home-builders/BuildSteps.astro';
+import HbFaq from './components/home-builders/HbFaq.astro';
 import HbHero from './components/home-builders/HbHero.astro';
 import MaterialsPicker from './components/home-builders/MaterialsPicker.astro';
+import StickyCta from './components/home-builders/StickyCta.astro';
 import WaterproofingGuide from './components/home-builders/WaterproofingGuide.astro';
+import WhereToBuy from './components/home-builders/WhereToBuy.astro';
 import { whatsappLink } from './data/company';
 import { getDict, pagePath, sectionNav } from './i18n';
-import { HB_SECTION_IDS, getHbDict, hbSectionHref, type HbLang } from './i18n/home-builders';
+import { getHbDict, hbSectionHref, type HbLang, type HbSectionId } from './i18n/home-builders';
 import Base from './layouts/Base.astro';
 
 interface Props {
@@ -21,9 +25,10 @@ const { lang } = Astro.props;
 const dict = getDict(lang);
 const hb = getHbDict(lang);
 
-/** Шапка: якоря этой страницы + возврат на B2B-главную. */
+/** Шапка: ключевые якоря (все шесть не помещаются на lg) + возврат на B2B-главную. */
+const HEADER_IDS: HbSectionId[] = ['materials', 'waterproofing', 'calculator', 'faq'];
 const headerNav = [
-  ...HB_SECTION_IDS.map((id) => ({ href: hbSectionHref(id), label: hb.nav[id] })),
+  ...HEADER_IDS.map((id) => ({ href: hbSectionHref(id), label: hb.nav[id] })),
   { href: pagePath(lang, 'home'), label: hb.forBusiness },
 ];
 /** Подвал: разделы главной полными ссылками + текущая страница. */
@@ -54,6 +59,10 @@ const footerNav = [
   <MaterialsPicker lang={lang} hb={hb} />
   <WaterproofingGuide lang={lang} hb={hb} />
   <BagCalculator lang={lang} hb={hb} />
+  <BuildSteps lang={lang} hb={hb} />
+  <WhereToBuy lang={lang} hb={hb} />
+  <HbFaq lang={lang} hb={hb} />
+  <StickyCta lang={lang} hb={hb} />
 
   <Footer slot="footer" lang={lang} dict={dict} nav={footerNav} />
 </Base>

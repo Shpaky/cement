@@ -1,0 +1,69 @@
+---
+/** FAQ застройщиков: <details name="hb-faq"> — эксклюзивный аккордеон без JS. */
+import { whatsappLink } from '../../data/company';
+import type { HbDictionary, HbLang } from '../../i18n/home-builders';
+import Button from '../Button.astro';
+import Container from '../Container.astro';
+import SectionHeading from '../SectionHeading.astro';
+
+interface Props {
+  lang: HbLang;
+  hb: HbDictionary;
+}
+const { hb } = Astro.props;
+const t = hb.faq;
+---
+
+<section id="faq" class="scroll-mt-20 bg-ink-50 py-16 md:py-24" aria-labelledby="hb-faq-title">
+  <Container class="grid gap-10 lg:grid-cols-12 lg:gap-16">
+    <div class="lg:col-span-4">
+      <SectionHeading
+        id="hb-faq-title"
+        eyebrow={t.eyebrow}
+        title={t.title}
+        lead={t.lead}
+        class="mb-6"
+      />
+      <div class="rounded-lg border border-ink-200 bg-white p-6 shadow-card">
+        <p class="font-bold text-ink-900">{t.moreTitle}</p>
+        <Button
+          href={whatsappLink(hb.hero.whatsappText)}
+          variant="secondary"
+          class="mt-4"
+          target="_blank"
+          rel="noopener"
+        >
+          {t.moreCta}
+        </Button>
+      </div>
+    </div>
+
+    <div class="lg:col-span-8">
+      <div class="divide-y divide-ink-200 border-y border-ink-200">
+        {
+          t.items.map((item, i) => (
+            <details class="group" name="hb-faq" open={i === 0}>
+              <summary class="flex min-h-14 cursor-pointer items-center justify-between gap-4 py-4 text-left text-lg font-bold text-ink-900 hover:text-brand-600">
+                <span>{item.q}</span>
+                <svg
+                  class="h-5 w-5 shrink-0 text-brand-600 transition-transform duration-200 group-open:rotate-180"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  aria-hidden="true"
+                  focusable="false"
+                >
+                  <path d="m6 9 6 6 6-6" />
+                </svg>
+              </summary>
+              <p class="pb-5 text-base leading-relaxed text-ink-700">{item.a}</p>
+            </details>
+          ))
+        }
+      </div>
+    </div>
+  </Container>
+</section>

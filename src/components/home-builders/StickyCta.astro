@@ -1,0 +1,84 @@
+---
+/**
+ * Липкая панель «Позвонить / WhatsApp» только на мобильном (< md).
+ * Скрыта, пока hero в зоне видимости: показ переключает IntersectionObserver.
+ * Без JS панель не показывается — CTA есть в hero.
+ */
+import { company, whatsappLink } from '../../data/company';
+import type { HbDictionary, HbLang } from '../../i18n/home-builders';
+
+interface Props {
+  lang: HbLang;
+  hb: HbDictionary;
+}
+const { hb } = Astro.props;
+const t = hb.sticky;
+---
+
+<nav
+  class="fixed inset-x-0 bottom-0 z-30 border-t border-ink-200 bg-white/95 backdrop-blur md:hidden"
+  aria-label={t.label}
+  hidden
+  data-sticky-cta
+>
+  <div class="grid grid-cols-2 gap-3 px-4 py-3">
+    <a
+      href={company.phones.in.href}
+      class="inline-flex h-12 items-center justify-center gap-2 rounded-md border border-brand-600 bg-white text-base font-semibold text-brand-800"
+    >
+      <svg
+        class="h-5 w-5"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        aria-hidden="true"
+        focusable="false"
+      >
+        <path
+          d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2Z"
+        ></path>
+      </svg>
+      {t.call}
+    </a>
+    <a
+      href={whatsappLink(hb.hero.whatsappText)}
+      target="_blank"
+      rel="noopener"
+      class="inline-flex h-12 items-center justify-center gap-2 rounded-md bg-brand-600 text-base font-semibold text-white"
+    >
+      <svg
+        class="h-5 w-5"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        aria-hidden="true"
+        focusable="false"
+      >
+        <path d="M21 12a9 9 0 0 1-13.4 7.8L3 21l1.2-4.6A9 9 0 1 1 21 12Z"></path>
+        <path
+          d="M9 10a1 1 0 0 0 1 1h1l1 2 2-1a1 1 0 0 1 1 1v1a2 2 0 0 1-2 2 8 8 0 0 1-6-6 2 2 0 0 1 2-2Z"
+        ></path>
+      </svg>
+      {t.whatsapp}
+    </a>
+  </div>
+</nav>
+<!-- Отступ под панель, чтобы она не перекрывала подвал на мобильном -->
+<div class="h-20 md:hidden" aria-hidden="true" data-sticky-spacer></div>
+
+<script>
+  // Показываем панель, когда hero ушёл из viewport; прячем, когда вернулся.
+  const bar = document.querySelector<HTMLElement>('[data-sticky-cta]');
+  const hero = document.getElementById('hb-hero');
+  if (bar && hero && 'IntersectionObserver' in window) {
+    new IntersectionObserver(([entry]) => {
+      bar.hidden = entry.isIntersecting;
+    }).observe(hero);
+  }
+</script>

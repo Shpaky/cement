@@ -1,0 +1,75 @@
+---
+/** «Дом за 5 шагов»: на каждом шаге — цемент и гидроизоляция этого этапа. */
+import type { HbDictionary, HbLang } from '../../i18n/home-builders';
+import Container from '../Container.astro';
+import SectionHeading from '../SectionHeading.astro';
+
+interface Props {
+  lang: HbLang;
+  hb: HbDictionary;
+}
+const { hb } = Astro.props;
+const t = hb.steps;
+
+/** Иконки шагов (stroke=currentColor): чертёж, фундамент, каркас, стена, капля */
+const icons = [
+  'M4 4h16v16H4V4Z M4 10h16 M10 10v10 M14 4v6',
+  'M3 20h18 M5 20v-6h14v6 M7 14v-4h10v4 M9 10V6h6v4',
+  'M5 21V9l7-6 7 6v12 M5 15h14 M12 9v12 M9 21v-6 M15 21v-6',
+  'M3 6h18v12H3V6Z M3 10h18 M3 14h18 M9 6v4 M15 10v4 M9 14v4',
+  'M12 3s6 6.5 6 11a6 6 0 0 1-12 0c0-4.5 6-11 6-11Z M9 14a3 3 0 0 0 3 3',
+];
+---
+
+<section id="steps" class="scroll-mt-20 bg-ink-50 py-16 md:py-24" aria-labelledby="steps-title">
+  <Container>
+    <SectionHeading id="steps-title" eyebrow={t.eyebrow} title={t.title} lead={t.lead} />
+
+    <ol class="grid gap-6 md:grid-cols-2 lg:grid-cols-5">
+      {
+        t.items.map((step, i) => (
+          <li class="flex flex-col rounded-lg border border-ink-200 bg-white p-6 shadow-card">
+            <div class="flex items-center gap-3">
+              <span
+                class="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-md bg-brand-800 text-white"
+                aria-hidden="true"
+              >
+                <svg
+                  class="h-6 w-6"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.8"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  focusable="false"
+                >
+                  <path d={icons[i]} />
+                </svg>
+              </span>
+              <span class="text-xs font-bold tracking-widest text-brand-600 uppercase">
+                0{i + 1}
+              </span>
+            </div>
+            <h3 class="mt-4 text-lg font-bold text-ink-900">{step.title}</h3>
+            <p class="mt-2 text-sm leading-relaxed text-ink-700">{step.text}</p>
+            <dl class="mt-4 flex flex-col gap-3 border-t border-ink-100 pt-4">
+              <div>
+                <dt class="text-xs font-bold tracking-widest text-ink-500 uppercase">
+                  {t.cementLabel}
+                </dt>
+                <dd class="mt-1 text-sm text-ink-900">{step.cement}</dd>
+              </div>
+              <div>
+                <dt class="text-xs font-bold tracking-widest text-ink-500 uppercase">
+                  {t.waterproofingLabel}
+                </dt>
+                <dd class="mt-1 text-sm text-ink-900">{step.waterproofing}</dd>
+              </div>
+            </dl>
+          </li>
+        ))
+      }
+    </ol>
+  </Container>
+</section>

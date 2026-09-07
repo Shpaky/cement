@@ -5,7 +5,14 @@ import type { Lang } from '../types';
 export type HbLang = Extract<Lang, 'en' | 'hi'>;
 
 /** Якоря секций страницы. Порядок = порядок в навигации. */
-export const HB_SECTION_IDS = ['materials', 'waterproofing', 'calculator'] as const;
+export const HB_SECTION_IDS = [
+  'materials',
+  'waterproofing',
+  'calculator',
+  'steps',
+  'whereToBuy',
+  'faq',
+] as const;
 export type HbSectionId = (typeof HB_SECTION_IDS)[number];
 
 /** Схема текстов страницы для частных застройщиков. */
@@ -67,5 +74,38 @@ export interface HbDictionary {
     /** Шаблон префилла для сухих смесей без расчёта мешков: {work}, {qty}. */
     whatsappTextNoBags: string;
     disclaimer: string;
+  };
+  steps: {
+    eyebrow: string;
+    title: string;
+    lead: string;
+    cementLabel: string;
+    waterproofingLabel: string;
+    items: { title: string; text: string; cement: string; waterproofing: string }[];
+  };
+  whereToBuy: {
+    eyebrow: string;
+    title: string;
+    lead: string;
+    statesTitle: string;
+    states: string[];
+    cta: string;
+    /** Префилл WhatsApp; город пользователь вписывает сам. */
+    whatsappText: string;
+    /** Подпись контейнера под будущую таблицу дилеров по штатам. */
+    dealersNote: string;
+  };
+  faq: {
+    eyebrow: string;
+    title: string;
+    lead: string;
+    items: { q: string; a: string }[];
+    moreTitle: string;
+    moreCta: string;
+  };
+  sticky: {
+    label: string;
+    call: string;
+    whatsapp: string;
   };
 }

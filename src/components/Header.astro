@@ -45,7 +45,7 @@ const contactRest = contactExternal ? { target: '_blank', rel: 'noopener' } : {}
                 href={item.href}
                 aria-current={item.current ? 'page' : undefined}
                 class:list={[
-                  'inline-flex h-10 items-center rounded-md px-3 text-sm font-semibold transition-colors duration-200 hover:bg-brand-50 hover:text-brand-800',
+                  'inline-flex h-10 items-center rounded-md px-3 text-sm font-semibold whitespace-nowrap transition-colors duration-200 hover:bg-brand-50 hover:text-brand-800',
                   item.current ? 'text-brand-800' : 'text-ink-700',
                 ]}
               >
@@ -162,7 +162,7 @@ const contactRest = contactExternal ? { target: '_blank', rel: 'noopener' } : {}
 </header>
 
 <script>
-  // Единственный клиентский скрипт: синхронизирует aria-expanded с состоянием
+  // Скрипт меню: синхронизирует aria-expanded с состоянием
   // popover и закрывает меню при переходе по якорю.
   const button = document.querySelector<HTMLButtonElement>('[data-menu-button]');
   const menu = document.getElementById('mobile-menu');
