@@ -1,25 +1,27 @@
 ---
-import { LANGS, LANG_NAMES, LANG_SHORT, localePath, type Lang } from '../i18n';
+import { LANG_NAMES, LANG_SHORT, PAGE_LANGS, pagePath, type Lang, type PageId } from '../i18n';
 
 interface Props {
   current: Lang;
   label: string;
+  /** Страница, между локалями которой переключаемся (показываются только существующие). */
+  page?: PageId;
   /** compact — короткие коды (мобильный хедер), full — самоназвания. */
   variant?: 'compact' | 'full';
   class?: string;
 }
-const { current, label, variant = 'full', class: className = '' } = Astro.props;
+const { current, label, page = 'home', variant = 'full', class: className = '' } = Astro.props;
 ---
 
 <nav aria-label={label} class={className}>
   <ul class:list={['flex items-center', variant === 'compact' ? 'gap-0.5' : 'gap-1']}>
     {
-      LANGS.map((lang) => {
+      PAGE_LANGS[page].map((lang) => {
         const active = lang === current;
         return (
           <li>
             <a
-              href={localePath(lang)}
+              href={pagePath(lang, page)}
               hreflang={lang}
               lang={lang}
               aria-current={active ? 'page' : undefined}

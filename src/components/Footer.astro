@@ -1,14 +1,16 @@
 ---
 import { company } from '../data/company';
-import { SECTION_IDS, localePath, sectionHref, type Dictionary, type Lang } from '../i18n';
+import { localePath, type Dictionary, type Lang, type NavItem } from '../i18n';
 import Container from './Container.astro';
 import Logo from './Logo.astro';
 
 interface Props {
   lang: Lang;
   dict: Dictionary;
+  /** Пункты «Разделы» собирает оболочка страницы. */
+  nav: NavItem[];
 }
-const { lang, dict } = Astro.props;
+const { lang, dict, nav } = Astro.props;
 const year = new Date().getFullYear();
 
 const contactLinks = [
@@ -42,10 +44,10 @@ const contactLinks = [
         </h2>
         <ul class="mt-4 flex flex-col gap-2">
           {
-            SECTION_IDS.map((id) => (
+            nav.map((item) => (
               <li>
-                <a href={sectionHref(id)} class="text-sm text-ink-700 hover:text-brand-600">
-                  {dict.nav[id]}
+                <a href={item.href} class="text-sm text-ink-700 hover:text-brand-600">
+                  {item.label}
                 </a>
               </li>
             ))

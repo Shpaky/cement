@@ -4,22 +4,41 @@ import manropeLatin from '../assets/fonts/manrope-latin.woff2';
 import manropeCyrillic from '../assets/fonts/manrope-cyrillic.woff2';
 import notoDevanagari from '../assets/fonts/noto-sans-devanagari.woff2';
 import { company } from '../data/company';
-import { LANGS, LOCALE_TAGS, localeUrl, type Dictionary, type Lang } from '../i18n';
+import { LOCALE_TAGS, PAGE_LANGS, pageUrl, type Dictionary, type Lang, type PageId } from '../i18n';
 
 interface Props {
   lang: Lang;
   dict: Dictionary;
+  /** Страница сайта: задаёт canonical, hreflang и переключатель локалей */
+  page?: PageId;
   /** Переопределение <title> (например, для 404) */
   title?: string;
+  /** Переопределение meta description (по умолчанию — из словаря главной) */
+  description?: string;
+  /** Путь OG-картинки относительно base (по умолчанию og/<lang>.png) */
+  ogImage?: string;
+  /** Дополнительные объекты JSON-LD (Product, FAQPage …) помимо Organization */
+  jsonLd?: Record<string, unknown>[];
   /** Служебные страницы не индексируем */
   noindex?: boolean;
 }
 
-const { lang, dict, title = dict.meta.title, noindex = false } = Astro.props;
+const {
+  lang,
+  dict,
+  page = 'home',
+  title = dict.meta.title,
+  description = dict.meta.description,
+  ogImage: ogImagePath = `og/${lang}.png`,
+  jsonLd: extraJsonLd = [],
+  noindex = false,
+} = Astro.props;
 const base = import.meta.env.BASE_URL;
 const site = Astro.site?.href.replace(/\/$/, '') ?? '';
-const canonical = localeUrl(lang);
-const ogImage = `${site}${base}og/${lang}.png`;
+const canonical = pageUrl(lang, page);
+const ogImage = `${site}${base}${ogImagePath}`;
+/** Локали, на которых существует эта страница (hreflang, og:locale:alternate). */
+const pageLangs = PAGE_LANGS[page];
 
 /** Предзагрузка только тех субсетов, что реально нужны локали. */
 const preloadFonts =
@@ -30,14 +49,14 @@ const preloadFonts =
       : [manropeLatin];
 
 /** schema.org Organization — контакты и адрес пока плейсхолдеры (см. company.ts). */
-const jsonLd = {
+const organization = {
   '@context': 'https://schema.org',
   '@type': 'Organization',
   name: dict.company.name,
   alternateName: company.brand,
-  url: canonical,
+  url: pageUrl(lang, 'home'),
   logo: `${site}${base}apple-touch-icon.png`,
-  image: ogImage,
+  image: `${site}${base}og/${lang}.png`,
   description: dict.meta.description,
   email: company.email,
   telephone: company.phones.in.display,
@@ -60,6 +79,10 @@ const jsonLd = {
   ],
   sameAs: [company.whatsapp, company.telegram],
 };
+const jsonLd = [
+  organization,
+  ...extraJsonLd.map((o) => ({ '@context': 'https://schema.org', ...o })),
+];
 ---
 
 <!doctype html>
@@ -68,30 +91,36 @@ const jsonLd = {
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{title}</title>
-    <meta name="description" content={dict.meta.description} />
+    <meta name="description" content={description} />
     {noindex && <meta name="robots" content="noindex, nofollow" />}
     <link rel="canonical" href={canonical} />
-    {LANGS.map((l) => <link rel="alternate" hreflang={LOCALE_TAGS[l]} href={localeUrl(l)} />)}
-    <link rel="alternate" hreflang="x-default" href={localeUrl('en')} />
+    {
+      pageLangs.map((l) => (
+        <link rel="alternate" hreflang={LOCALE_TAGS[l]} href={pageUrl(l, page)} />
+      ))
+    }
+    <link rel="alternate" hreflang="x-default" href={pageUrl('en', page)} />
 
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content={dict.common.brandLine} />
     <meta property="og:title" content={title} />
-    <meta property="og:description" content={dict.meta.description} />
+    <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical} />
     <meta property="og:image" content={ogImage} />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
-    <meta property="og:image:alt" content={dict.meta.title} />
+    <meta property="og:image:alt" content={title} />
     <meta property="og:locale" content={LOCALE_TAGS[lang].replace('-', '_')} />
     {
-      LANGS.filter((l) => l !== lang).map((l) => (
-        <meta property="og:locale:alternate" content={LOCALE_TAGS[l].replace('-', '_')} />
-      ))
+      pageLangs
+        .filter((l) => l !== lang)
+        .map((l) => (
+          <meta property="og:locale:alternate" content={LOCALE_TAGS[l].replace('-', '_')} />
+        ))
     }
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={title} />
-    <meta name="twitter:description" content={dict.meta.description} />
+    <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={ogImage} />
 
     <link rel="icon" type="image/svg+xml" href={`${base}favicon.svg`} />
@@ -107,7 +136,7 @@ const jsonLd = {
       ))
     }
 
-    <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+    {jsonLd.map((obj) => <script type="application/ld+json" set:html={JSON.stringify(obj)} />)}
   </head>
   <body class="flex min-h-svh flex-col">
     <a

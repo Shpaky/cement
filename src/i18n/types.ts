@@ -14,6 +14,27 @@ export const SECTION_IDS = [
 ] as const;
 export type SectionId = (typeof SECTION_IDS)[number];
 
+/** Страницы сайта → сегмент пути после префикса локали ('' = корень локали). */
+export const PAGES = {
+  home: '',
+  homeBuilders: 'home-builders',
+} as const;
+export type PageId = keyof typeof PAGES;
+
+/** На каких локалях существует страница (hreflang, переключатель языков). */
+export const PAGE_LANGS: Record<PageId, readonly Lang[]> = {
+  home: LANGS,
+  homeBuilders: ['en', 'hi'],
+};
+
+/** Пункт навигации, собранный оболочкой страницы (Landing / HomeBuilders). */
+export interface NavItem {
+  href: string;
+  label: string;
+  /** Текущая страница (aria-current="page"). */
+  current?: boolean;
+}
+
 /** Единая схема всех текстов. Каждый словарь обязан ей соответствовать (`satisfies`). */
 export interface Dictionary {
   meta: {

@@ -13,7 +13,7 @@ import Faq from './components/sections/Faq.astro';
 import Hero from './components/sections/Hero.astro';
 import Logistics from './components/sections/Logistics.astro';
 import Products from './components/sections/Products.astro';
-import { getDict, type Lang } from './i18n';
+import { getDict, sectionNav, type Lang } from './i18n';
 import Base from './layouts/Base.astro';
 
 interface Props {
@@ -21,10 +21,13 @@ interface Props {
 }
 const { lang } = Astro.props;
 const dict = getDict(lang);
+const nav = sectionNav(lang, dict);
+/** В шапке «Контакты» заменяет кнопка CTA. */
+const headerNav = nav.filter((item) => item.href !== '#contacts');
 ---
 
-<Base lang={lang} dict={dict}>
-  <Header slot="header" lang={lang} dict={dict} />
+<Base lang={lang} dict={dict} page="home">
+  <Header slot="header" lang={lang} dict={dict} nav={headerNav} page="home" />
 
   <Hero dict={dict} />
   <About dict={dict} />
@@ -36,5 +39,5 @@ const dict = getDict(lang);
   <Faq dict={dict} />
   <Contacts dict={dict} />
 
-  <Footer slot="footer" lang={lang} dict={dict} />
+  <Footer slot="footer" lang={lang} dict={dict} nav={nav} />
 </Base>

@@ -1,5 +1,12 @@
 ---
-import { SECTION_IDS, localePath, sectionHref, type Dictionary, type Lang } from '../i18n';
+import {
+  localePath,
+  sectionHref,
+  type Dictionary,
+  type Lang,
+  type NavItem,
+  type PageId,
+} from '../i18n';
 import Button from './Button.astro';
 import Container from './Container.astro';
 import LangSwitcher from './LangSwitcher.astro';
@@ -8,9 +15,14 @@ import Logo from './Logo.astro';
 interface Props {
   lang: Lang;
   dict: Dictionary;
+  /** Пункты навигации собирает оболочка страницы (Landing / HomeBuilders). */
+  nav: NavItem[];
+  /** Страница для переключателя локалей. */
+  page?: PageId;
+  /** Куда ведёт кнопка «Связаться». */
+  contactHref?: string;
 }
-const { lang, dict } = Astro.props;
-const navItems = SECTION_IDS.filter((id) => id !== 'contacts');
+const { lang, dict, nav, page = 'home', contactHref = sectionHref('contacts') } = Astro.props;
 ---
 
 <header class="sticky top-0 z-40 border-b border-ink-200 bg-white/95 backdrop-blur">
@@ -24,13 +36,17 @@ const navItems = SECTION_IDS.filter((id) => id !== 'contacts');
     <nav aria-label={dict.common.mainNav} class="hidden lg:block">
       <ul class="flex items-center gap-1">
         {
-          navItems.map((id) => (
+          nav.map((item) => (
             <li>
               <a
-                href={sectionHref(id)}
-                class="inline-flex h-10 items-center rounded-md px-3 text-sm font-semibold text-ink-700 transition-colors duration-200 hover:bg-brand-50 hover:text-brand-800"
+                href={item.href}
+                aria-current={item.current ? 'page' : undefined}
+                class:list={[
+                  'inline-flex h-10 items-center rounded-md px-3 text-sm font-semibold transition-colors duration-200 hover:bg-brand-50 hover:text-brand-800',
+                  item.current ? 'text-brand-800' : 'text-ink-700',
+                ]}
               >
-                {dict.nav[id]}
+                {item.label}
               </a>
             </li>
           ))
@@ -41,13 +57,19 @@ const navItems = SECTION_IDS.filter((id) => id !== 'contacts');
     <div class="flex items-center gap-2 lg:gap-4">
       <LangSwitcher
         current={lang}
+        page={page}
         label={dict.common.language}
         variant="compact"
         class="lg:hidden"
       />
-      <LangSwitcher current={lang} label={dict.common.language} class="hidden lg:block" />
+      <LangSwitcher
+        current={lang}
+        page={page}
+        label={dict.common.language}
+        class="hidden lg:block"
+      />
       <div class="hidden md:block">
-        <Button href={sectionHref('contacts')}>{dict.common.contactCta}</Button>
+        <Button href={contactHref}>{dict.common.contactCta}</Button>
       </div>
 
       <button
@@ -112,13 +134,14 @@ const navItems = SECTION_IDS.filter((id) => id !== 'contacts');
       <nav aria-label={dict.common.mainNav}>
         <ul class="flex flex-col">
           {
-            navItems.map((id) => (
+            nav.map((item) => (
               <li>
                 <a
-                  href={sectionHref(id)}
+                  href={item.href}
+                  aria-current={item.current ? 'page' : undefined}
                   class="flex min-h-12 items-center border-b border-ink-100 text-base font-semibold text-ink-900 hover:text-brand-600"
                 >
-                  {dict.nav[id]}
+                  {item.label}
                 </a>
               </li>
             ))
@@ -126,10 +149,10 @@ const navItems = SECTION_IDS.filter((id) => id !== 'contacts');
         </ul>
       </nav>
       <div class="mt-6 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-        <Button href={sectionHref('contacts')} size="lg" class="w-full sm:w-auto">
+        <Button href={contactHref} size="lg" class="w-full sm:w-auto">
           {dict.common.contactCta}
         </Button>
-        <LangSwitcher current={lang} label={dict.common.language} />
+        <LangSwitcher current={lang} page={page} label={dict.common.language} />
       </div>
     </Container>
   </div>
