@@ -2,7 +2,7 @@ name: CI
 
 on:
   push:
-    branches: [devel]
+    branches: [devel, waterproofing-admixtures]
   pull_request:
     branches: [master]
 
