@@ -1,7 +1,10 @@
 ---
-import { sectionHref, type Dictionary } from '../../i18n';
+import { whatsappLink } from '../../data/company';
+import { PRODUCT_GROUPS, productsByGroup } from '../../data/products';
+import type { Dictionary } from '../../i18n';
 import Button from '../Button.astro';
 import Container from '../Container.astro';
+import ProductCard from '../ProductCard.astro';
 import SectionHeading from '../SectionHeading.astro';
 
 interface Props {
@@ -10,11 +13,12 @@ interface Props {
 const { dict } = Astro.props;
 const t = dict.products;
 
-/** Иконки упаковки: мешок, биг-бэг, судно (stroke=currentColor) */
+/** Иконки упаковки: мешок, биг-бэг, судно, паллета (stroke=currentColor) */
 const packIcons = [
   'M8 3h8l1 4H7l1-4Z M6 7h12l1 14H5L6 7Z M10 11v6 M14 11v6',
   'M6 8h12v13H6V8Z M9 8V5a3 3 0 0 1 6 0v3 M6 12h12',
   'M3 17l1.5 3h15L21 17H3Z M5 17V10h14v7 M9 10V6h6v4 M12 3v3',
+  'M3 16h18 M4 16v3 M12 16v3 M20 16v3 M5 16V9h6v7 M13 16V4h6v12 M5 12h6',
 ];
 ---
 
@@ -22,54 +26,28 @@ const packIcons = [
   <Container>
     <SectionHeading id="products-title" eyebrow={t.eyebrow} title={t.title} lead={t.lead} />
 
-    <ul class="grid gap-6 md:grid-cols-2">
-      {
-        t.items.map((p) => (
-          <li class="flex flex-col overflow-hidden rounded-lg border border-ink-200 bg-white shadow-card">
-            <div class="bg-brand-800 px-6 py-5 text-white md:px-8">
-              <h3 class="text-2xl font-extrabold tracking-tight md:text-3xl">{p.name}</h3>
-              <p class="mt-1 text-sm text-brand-100 md:text-base">{p.tagline}</p>
-            </div>
-            <dl class="grid flex-1 gap-x-6 gap-y-4 px-6 py-6 sm:grid-cols-2 md:px-8">
-              <div class="sm:col-span-2">
-                <dt class="text-xs font-bold tracking-widest text-ink-500 uppercase">
-                  {t.specLabels.standard}
-                </dt>
-                <dd class="mt-1 text-sm font-semibold text-ink-900">{p.standard}</dd>
-              </div>
-              <div>
-                <dt class="text-xs font-bold tracking-widest text-ink-500 uppercase">
-                  {t.specLabels.strength}
-                </dt>
-                <dd class="mt-1 text-lg font-bold text-brand-800">{p.strength}</dd>
-              </div>
-              <div>
-                <dt class="text-xs font-bold tracking-widest text-ink-500 uppercase">
-                  {t.specLabels.setting}
-                </dt>
-                <dd class="mt-1 text-lg font-bold text-brand-800">{p.setting}</dd>
-              </div>
-              <div class="sm:col-span-2">
-                <dt class="text-xs font-bold tracking-widest text-ink-500 uppercase">
-                  {t.specLabels.applications}
-                </dt>
-                <dd class="mt-2 flex flex-wrap gap-2">
-                  {p.applications.map((a) => (
-                    <span class="rounded-full bg-brand-50 px-3 py-1 text-sm font-semibold text-brand-800">
-                      {a}
-                    </span>
-                  ))}
-                </dd>
-              </div>
-            </dl>
-          </li>
-        ))
-      }
-    </ul>
+    {
+      PRODUCT_GROUPS.map((group, gi) => (
+        <div class:list={[gi > 0 && 'mt-12 lg:mt-16']}>
+          <h3 class="text-2xl font-extrabold tracking-tight text-brand-800 md:text-3xl">
+            {t.groups[group].title}
+          </h3>
+          <p class="mt-2 max-w-3xl text-base leading-relaxed text-ink-700 md:text-lg">
+            {t.groups[group].lead}
+          </p>
+          <ul class="mt-6 grid gap-6 md:grid-cols-2">
+            {productsByGroup(group).map((product) => (
+              <ProductCard product={product} dict={dict} />
+            ))}
+          </ul>
+          {group === 'waterproofing' && <p class="mt-4 text-sm text-ink-500">{t.tdsNote}</p>}
+        </div>
+      ))
+    }
 
     <div class="mt-12 rounded-lg bg-ink-50 p-6 md:p-8 lg:mt-16">
       <h3 class="text-xl font-bold text-ink-900">{t.packaging.title}</h3>
-      <ul class="mt-6 grid gap-6 md:grid-cols-3">
+      <ul class="mt-6 grid gap-6 md:grid-cols-2 lg:grid-cols-4">
         {
           t.packaging.items.map((item, i) => (
             <li class="flex gap-4">
@@ -100,7 +78,9 @@ const packIcons = [
       </ul>
       <div class="mt-8 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <p class="text-sm text-ink-500">{t.note}</p>
-        <Button href={sectionHref('contacts')} variant="secondary">{t.cta}</Button>
+        <Button href={whatsappLink(t.rfqText)} variant="secondary" target="_blank" rel="noopener">
+          {t.cta}
+        </Button>
       </div>
     </div>
   </Container>

@@ -1,0 +1,93 @@
+---
+/**
+ * Карточка продукта. Набор и порядок строк характеристик задаёт `product.specKeys`
+ * (src/data/products.ts); строка выводится, только если в словаре есть непустое
+ * значение — `null` («не подтверждено TDS») скрывает её.
+ */
+import type { Product } from '../data/products';
+import type { Dictionary } from '../i18n';
+
+interface Props {
+  product: Product;
+  dict: Dictionary;
+}
+const { product, dict } = Astro.props;
+const t = dict.products;
+const item = t.items[product.id];
+
+const rows = product.specKeys
+  .map((key) => ({ key, value: item.specs[key] }))
+  .filter((row): row is { key: (typeof row)['key']; value: string } => Boolean(row.value))
+  .map((row) => ({ ...row, key: row.key, large: product.keySpecs.includes(row.key) }));
+---
+
+<li class="flex flex-col overflow-hidden rounded-lg border border-ink-200 bg-white shadow-card">
+  <div class="bg-brand-800 px-6 py-5 text-white md:px-8">
+    <h4 class="text-2xl font-extrabold tracking-tight md:text-3xl">{item.name}</h4>
+    <p class="mt-1 text-sm text-brand-100 md:text-base">{item.tagline}</p>
+  </div>
+  <dl class="grid flex-1 content-start gap-x-6 gap-y-4 px-6 py-6 sm:grid-cols-2 md:px-8">
+    {
+      rows.map((row) => (
+        <div class:list={[!row.large && 'sm:col-span-2']}>
+          <dt class="text-xs font-bold tracking-widest text-ink-500 uppercase">
+            {t.specLabels[row.key]}
+          </dt>
+          <dd
+            class:list={[
+              'mt-1',
+              row.large ? 'text-lg font-bold text-brand-800' : 'text-sm font-semibold text-ink-900',
+            ]}
+          >
+            {row.value}
+          </dd>
+        </div>
+      ))
+    }
+    {
+      item.benefits && (
+        <div class="sm:col-span-2">
+          <dt class="text-xs font-bold tracking-widest text-ink-500 uppercase">
+            {t.specLabels.benefits}
+          </dt>
+          <dd class="mt-2">
+            <ul class="flex flex-col gap-1.5">
+              {item.benefits.map((b) => (
+                <li class="flex gap-2.5 text-sm text-ink-700">
+                  <svg
+                    class="mt-0.5 h-4 w-4 shrink-0 text-brand-600"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2.2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    aria-hidden="true"
+                    focusable="false"
+                  >
+                    <path d="M20 6 9 17l-5-5" />
+                  </svg>
+                  <span>{b}</span>
+                </li>
+              ))}
+            </ul>
+          </dd>
+        </div>
+      )
+    }
+    <div class="sm:col-span-2">
+      <dt class="text-xs font-bold tracking-widest text-ink-500 uppercase">
+        {t.specLabels.applications}
+      </dt>
+      <dd class="mt-2 flex flex-wrap gap-2">
+        {
+          item.applications.map((a) => (
+            <span class="rounded-full bg-brand-50 px-3 py-1 text-sm font-semibold text-brand-800">
+              {a}
+            </span>
+          ))
+        }
+      </dd>
+    </div>
+  </dl>
+</li>

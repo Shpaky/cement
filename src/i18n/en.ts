@@ -61,57 +61,141 @@ export const en = {
   },
   products: {
     eyebrow: 'Products',
-    title: 'Cement grades for the Indian market',
-    lead: 'Portland cement produced to Russian GOST and matched to the Indian IS standards your engineers specify.',
+    title: 'Cement and waterproofing for the Indian market',
+    lead: 'Portland cement produced to Russian GOST and matched to the Indian IS standards your engineers specify — plus the D5 waterproofing line for concrete, mortar and plaster.',
+    groups: {
+      cement: {
+        title: 'Cement',
+        lead: 'OPC, PPC and sulphate-resisting grades in 50 kg bags, big bags and bulk.',
+      },
+      waterproofing: {
+        title: 'Waterproofing & admixtures',
+        lead: 'D5 integral waterproofing admixture and the D5 Aqua Stop ready-mix built on it — ordered together with cement or on their own.',
+      },
+    },
     specLabels: {
       standard: 'Standard',
       strength: '28-day strength',
       setting: 'Initial setting',
+      form: 'Form',
+      dosage: 'Dosage',
+      impermeability: 'Water impermeability',
+      strengthGain: 'Strength gain',
+      consumption: 'Consumption',
+      layer: 'Layer thickness',
+      packaging: 'Packaging',
+      benefits: 'What it does',
       applications: 'Typical use',
     },
-    items: [
-      {
+    items: {
+      opc53: {
         name: 'OPC 53',
         tagline: 'High early strength for structural concrete',
-        standard: 'IS 269:2015 (53 grade) · GOST 31108 CEM I 52.5',
-        strength: '≥ 53 MPa',
-        setting: '≥ 30 min',
+        specs: {
+          standard: 'IS 269:2015 (53 grade) · GOST 31108 CEM I 52.5',
+          strength: '≥ 53 MPa',
+          setting: '≥ 30 min',
+        },
         applications: ['RCC & high-rise', 'Precast', 'Bridges', 'Prestressed'],
       },
-      {
+      opc43: {
         name: 'OPC 43',
         tagline: 'General-purpose grade for everyday construction',
-        standard: 'IS 269:2015 (43 grade) · GOST 31108 CEM I 42.5',
-        strength: '≥ 43 MPa',
-        setting: '≥ 30 min',
+        specs: {
+          standard: 'IS 269:2015 (43 grade) · GOST 31108 CEM I 42.5',
+          strength: '≥ 43 MPa',
+          setting: '≥ 30 min',
+        },
         applications: ['Residential', 'Plaster & masonry', 'Roads', 'Blocks'],
       },
-      {
+      ppc: {
         name: 'PPC',
         tagline: 'Pozzolana cement for durability and mass concrete',
-        standard: 'IS 1489 (Part 1) · GOST 31108 CEM II/B-P',
-        strength: '≥ 33 MPa',
-        setting: '≥ 30 min',
+        specs: {
+          standard: 'IS 1489 (Part 1) · GOST 31108 CEM II/B-P',
+          strength: '≥ 33 MPa',
+          setting: '≥ 30 min',
+        },
         applications: ['Mass concrete', 'Dams & canals', 'Marine', 'Sewage works'],
       },
-      {
+      src: {
         name: 'SRC',
         tagline: 'Sulphate-resisting cement for aggressive soils',
-        standard: 'IS 12330 · GOST 22266',
-        strength: '≥ 33 MPa',
-        setting: '≥ 30 min',
+        specs: {
+          standard: 'IS 12330 · GOST 22266',
+          strength: '≥ 33 MPa',
+          setting: '≥ 30 min',
+        },
         applications: ['Foundations', 'Coastal', 'Sulphate soils', 'Pipes'],
       },
-    ],
+      d5: {
+        name: 'D5',
+        tagline: 'Integral waterproofing admixture for concrete and mortar',
+        specs: {
+          standard: 'EN 934-2 · IS 2645 / IS 9103 — conformity being registered',
+          form: 'Dry powder, mixed with water before dosing into the mix',
+          dosage: null, // TODO: из TDS производителя (% от массы цемента / кг на м³)
+          impermeability: null, // TODO: класс W из TDS
+          strengthGain: null, // TODO: из TDS
+          packaging: null, // TODO: фасовка и паллетирование из TDS
+        },
+        benefits: [
+          'Waterproof concrete without an external membrane',
+          'Self-healing of hairline cracks in service',
+          'Better workability, sulphate resistance and faster hardening',
+          'Works with any Portland cement — a trial mix is recommended',
+        ],
+        applications: [
+          'RCC & foundations',
+          'Basements',
+          'Water tanks',
+          'Plaster & screeds',
+          'Shotcrete',
+          'Precast',
+        ],
+      },
+      d5AquaStop: {
+        name: 'D5 Aqua Stop',
+        tagline: 'Ready-mix waterproof plaster, screed and coating',
+        specs: {
+          standard: null, // TODO: стандарты из TDS
+          form: 'Dry mix — add water and apply',
+          consumption: null, // TODO: кг/м² на мм из TDS
+          layer: null, // TODO: толщина слоя из TDS
+          impermeability: null, // TODO: из TDS
+          packaging: null, // TODO: из TDS
+        },
+        benefits: [
+          'Waterproof layer in one mix — no separate primer or membrane',
+          'For wet rooms, roofs, tanks and basements',
+          'Also used as a repair layer on leaking surfaces',
+        ],
+        applications: [
+          'Bathrooms & kitchens',
+          'Roofs & terraces',
+          'Water tanks',
+          'Basements',
+          'Balconies',
+        ],
+      },
+    },
+    tdsNote:
+      'Dosage, consumption and performance figures for D5 products are published from the manufacturer’s technical data sheet — ask us for the TDS and SDS.',
     packaging: {
       title: 'Packaging & shipment',
       items: [
         { title: '50 kg bags', text: 'PP/paper bags, palletised or loose in containers.' },
         { title: 'Big bags 1–1.5 t', text: 'Sling bags for port handling and site delivery.' },
         { title: 'Bulk', text: 'Bulk vessels and containers with liners for large volumes.' },
+        {
+          title: 'Admixtures & dry mixes',
+          text: 'Palletised bags in 20/40 ft containers, consolidated with bagged cement. From one pallet for trials.',
+        },
       ],
     },
     cta: 'Request price list',
+    rfqText:
+      'Hello! Please send a price list for cement (OPC / PPC / SRC) and the D5 waterproofing line (D5 admixture, D5 Aqua Stop).',
     note: 'TODO: confirm the grade list and figures with the plant laboratory before publishing.',
   },
   logistics: {

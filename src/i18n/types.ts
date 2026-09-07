@@ -1,3 +1,5 @@
+import type { ProductGroup, ProductId, SpecKey } from '../data/products';
+
 /** Поддерживаемые локали. Порядок = порядок в переключателе языков. */
 export const LANGS = ['en', 'hi', 'ru'] as const;
 export type Lang = (typeof LANGS)[number];
@@ -74,17 +76,24 @@ export interface Dictionary {
     eyebrow: string;
     title: string;
     lead: string;
-    specLabels: { standard: string; strength: string; setting: string; applications: string };
-    items: {
-      name: string;
-      tagline: string;
-      standard: string;
-      strength: string;
-      setting: string;
-      applications: string[];
-    }[];
+    groups: Record<ProductGroup, { title: string; lead: string }>;
+    specLabels: Record<SpecKey | 'benefits' | 'applications', string>;
+    /** Тексты карточек; структура и набор строк — в src/data/products.ts. null = скрыть строку. */
+    items: Record<
+      ProductId,
+      {
+        name: string;
+        tagline: string;
+        specs: Partial<Record<SpecKey, string | null>>;
+        benefits?: string[];
+        applications: string[];
+      }
+    >;
+    tdsNote: string;
     packaging: { title: string; items: { title: string; text: string }[] };
     cta: string;
+    /** Текст префилла WhatsApp для кнопки «Запросить прайс-лист». */
+    rfqText: string;
     note: string;
   };
   logistics: {
