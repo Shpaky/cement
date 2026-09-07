@@ -387,7 +387,7 @@ export const en = {
   contacts: {
     eyebrow: 'Contacts',
     title: 'Talk to the export desk',
-    lead: 'Call, write or message — an export manager replies in English within one business day. For a quotation, tell us the grade, volume, packaging and destination port.',
+    lead: 'Call, write or message — an export manager replies in English within one business day. For a quotation, tell us the product (cement grade or D5 line), volume, packaging and destination port.',
     channels: [
       { key: 'phoneIn', label: 'India office', hint: 'Call in Indian business hours' },
       { key: 'phoneRu', label: 'Plant, Russia', hint: 'Export department' },
