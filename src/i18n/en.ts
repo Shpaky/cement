@@ -29,10 +29,17 @@ export const en = {
   hero: {
     eyebrow: 'Cement manufacturer · Russia → India',
     title: 'Russian cement for India’s construction market',
-    lead: 'Direct supply of OPC and PPC cement from a Russian plant to Indian ports. Stable quality, competitive pricing, full export documentation.',
+    lead: 'Direct supply of OPC and PPC cement, D5 waterproofing admixture and D5 Aqua Stop ready-mix from a Russian plant to Indian ports. Stable quality, competitive pricing, full export documentation.',
     ctaCall: 'Call India office',
     ctaWhatsapp: 'Write on WhatsApp',
-    badges: ['OPC 43 / 53', 'PPC', 'Bulk & 50 kg bags', 'FOB / CIF'],
+    badges: [
+      'OPC 43 / 53',
+      'PPC',
+      'D5 admixture',
+      'D5 Aqua Stop',
+      'Bulk & 50 kg bags',
+      'FOB / CIF',
+    ],
     illustrationAlt: 'Stylised cement blocks in brand colours',
   },
   about: {
