@@ -25,6 +25,7 @@ export const en = {
     certificates: 'Certificates',
     faq: 'FAQ',
     contacts: 'Contacts',
+    homeBuilders: 'Home builders',
   },
   hero: {
     eyebrow: 'Cement manufacturer · Russia → India',
@@ -32,6 +33,7 @@ export const en = {
     lead: 'Direct supply of OPC and PPC cement, D5 waterproofing admixture and D5 Aqua Stop ready-mix from a Russian plant to Indian ports. Stable quality, competitive pricing, full export documentation.',
     ctaCall: 'Call India office',
     ctaWhatsapp: 'Write on WhatsApp',
+    builderLink: 'Building a house? See our guide for home builders',
     badges: [
       'OPC 43 / 53',
       'PPC',

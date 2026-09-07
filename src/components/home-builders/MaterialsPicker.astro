@@ -1,0 +1,60 @@
+---
+import { pagePath } from '../../i18n';
+import type { HbDictionary, HbLang } from '../../i18n/home-builders';
+import Button from '../Button.astro';
+import Container from '../Container.astro';
+import SectionHeading from '../SectionHeading.astro';
+
+interface Props {
+  lang: HbLang;
+  hb: HbDictionary;
+}
+const { lang, hb } = Astro.props;
+const t = hb.materials;
+---
+
+<section id="materials" class="scroll-mt-20 py-16 md:py-24" aria-labelledby="materials-title">
+  <Container>
+    <SectionHeading id="materials-title" eyebrow={t.eyebrow} title={t.title} lead={t.lead} />
+
+    <!-- Карточки вместо таблицы: на 360 px таблица из трёх колонок не читается -->
+    <ul class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+      {
+        t.rows.map((row) => (
+          <li class="flex flex-col rounded-lg border border-ink-200 bg-white p-6 shadow-card">
+            <dl class="flex flex-1 flex-col gap-4">
+              <div>
+                <dt class="text-xs font-bold tracking-widest text-ink-500 uppercase">
+                  {t.labels.task}
+                </dt>
+                <dd class="mt-1 text-lg font-bold text-ink-900">{row.task}</dd>
+              </div>
+              <div>
+                <dt class="text-xs font-bold tracking-widest text-ink-500 uppercase">
+                  {t.labels.material}
+                </dt>
+                <dd class="mt-1">
+                  <span class="inline-flex items-center rounded-sm bg-brand-800 px-2.5 py-1 text-sm font-bold text-white">
+                    {row.material}
+                  </span>
+                </dd>
+              </div>
+              <div>
+                <dt class="text-xs font-bold tracking-widest text-ink-500 uppercase">
+                  {t.labels.why}
+                </dt>
+                <dd class="mt-1 text-sm leading-relaxed text-ink-700">{row.why}</dd>
+              </div>
+            </dl>
+          </li>
+        ))
+      }
+    </ul>
+
+    <div class="mt-8">
+      <Button href={pagePath(lang, 'home', 'products')} variant="secondary">
+        {t.fullSpecs}
+      </Button>
+    </div>
+  </Container>
+</section>

@@ -48,6 +48,11 @@ export function pageUrl(lang: Lang, page: PageId = 'home'): string {
   return segment ? getAbsoluteLocaleUrl(lang, segment) : getAbsoluteLocaleUrl(lang);
 }
 
+/** Путь к странице на локали `lang`, а если её там нет — на английской версии (RU → EN). */
+export function pagePathOrFallback(lang: Lang, page: PageId): string {
+  return pagePath(PAGE_LANGS[page].includes(lang) ? lang : 'en', page);
+}
+
 /** Относительный путь к корню локали (главная). */
 export function localePath(lang: Lang, hash?: SectionId | string): string {
   return pagePath(lang, 'home', hash);

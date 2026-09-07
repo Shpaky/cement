@@ -15,7 +15,7 @@ import Logistics from './components/sections/Logistics.astro';
 import Products from './components/sections/Products.astro';
 import { company } from './data/company';
 import { productsByGroup } from './data/products';
-import { getDict, pageUrl, sectionNav, type Lang } from './i18n';
+import { getDict, pagePathOrFallback, pageUrl, sectionNav, type Lang } from './i18n';
 import Base from './layouts/Base.astro';
 
 interface Props {
@@ -23,7 +23,12 @@ interface Props {
 }
 const { lang } = Astro.props;
 const dict = getDict(lang);
-const nav = sectionNav(lang, dict);
+/** Секции главной + страница для застройщиков (для RU ведёт на EN-версию). */
+const homeBuildersItem = {
+  href: pagePathOrFallback(lang, 'homeBuilders'),
+  label: dict.nav.homeBuilders,
+};
+const nav = [...sectionNav(lang, dict), homeBuildersItem];
 /** В шапке «Контакты» заменяет кнопка CTA. */
 const headerNav = nav.filter((item) => item.href !== '#contacts');
 
@@ -45,7 +50,7 @@ const productJsonLd = productsByGroup('waterproofing').map((p) => {
 <Base lang={lang} dict={dict} page="home" jsonLd={productJsonLd}>
   <Header slot="header" lang={lang} dict={dict} nav={headerNav} page="home" />
 
-  <Hero dict={dict} />
+  <Hero lang={lang} dict={dict} />
   <About dict={dict} />
   <Facts dict={dict} />
   <Products dict={dict} />

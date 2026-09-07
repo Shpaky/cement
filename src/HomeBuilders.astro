@@ -1,0 +1,55 @@
+---
+/**
+ * Страница для частных застройщиков (B2C): /home-builders/ и /hi/home-builders/.
+ * Порядок секций задаётся здесь; тексты — в src/i18n/home-builders/.
+ */
+import Footer from './components/Footer.astro';
+import Header from './components/Header.astro';
+import HbHero from './components/home-builders/HbHero.astro';
+import MaterialsPicker from './components/home-builders/MaterialsPicker.astro';
+import { whatsappLink } from './data/company';
+import { getDict, pagePath, sectionNav } from './i18n';
+import { HB_SECTION_IDS, getHbDict, hbSectionHref, type HbLang } from './i18n/home-builders';
+import Base from './layouts/Base.astro';
+
+interface Props {
+  lang: HbLang;
+}
+const { lang } = Astro.props;
+const dict = getDict(lang);
+const hb = getHbDict(lang);
+
+/** Шапка: якоря этой страницы + возврат на B2B-главную. */
+const headerNav = [
+  ...HB_SECTION_IDS.map((id) => ({ href: hbSectionHref(id), label: hb.nav[id] })),
+  { href: pagePath(lang, 'home'), label: hb.forBusiness },
+];
+/** Подвал: разделы главной полными ссылками + текущая страница. */
+const footerNav = [
+  ...sectionNav(lang, dict, false),
+  { href: pagePath(lang, 'homeBuilders'), label: dict.nav.homeBuilders, current: true },
+];
+---
+
+<Base
+  lang={lang}
+  dict={dict}
+  page="homeBuilders"
+  title={hb.meta.title}
+  description={hb.meta.description}
+  ogImage={`og/home-builders-${lang}.png`}
+>
+  <Header
+    slot="header"
+    lang={lang}
+    dict={dict}
+    nav={headerNav}
+    page="homeBuilders"
+    contactHref={whatsappLink(hb.hero.whatsappText)}
+  />
+
+  <HbHero lang={lang} hb={hb} />
+  <MaterialsPicker lang={lang} hb={hb} />
+
+  <Footer slot="footer" lang={lang} dict={dict} nav={footerNav} />
+</Base>

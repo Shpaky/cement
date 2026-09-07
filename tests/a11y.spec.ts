@@ -1,8 +1,14 @@
 import { test, expect } from '@playwright/test';
 import AxeBuilder from '@axe-core/playwright';
 
-/** Локали → путь относительно base. Порядок совпадает с astro.config.mjs. */
-const LOCALES: Record<string, string> = { en: '/', hi: '/hi/', ru: '/ru/' };
+/** Страницы сайта: локаль → путь относительно base. Порядок совпадает с astro.config.mjs. */
+const ROUTES: { lang: string; path: string }[] = [
+  { lang: 'en', path: '/' },
+  { lang: 'hi', path: '/hi/' },
+  { lang: 'ru', path: '/ru/' },
+  { lang: 'en', path: '/home-builders/' },
+  { lang: 'hi', path: '/hi/home-builders/' },
+];
 
 /** Контрольные вьюпорты из CLAUDE.md. */
 const VIEWPORTS = [
@@ -11,9 +17,9 @@ const VIEWPORTS = [
   { name: 'desktop', width: 1280, height: 800 },
 ];
 
-for (const [lang, path] of Object.entries(LOCALES)) {
+for (const { lang, path } of ROUTES) {
   for (const vp of VIEWPORTS) {
-    test(`a11y ${lang} @ ${vp.width}px`, async ({ page, baseURL }) => {
+    test(`a11y ${lang} ${path} @ ${vp.width}px`, async ({ page, baseURL }) => {
       await page.setViewportSize({ width: vp.width, height: vp.height });
       const res = await page.goto(`${baseURL}${path}`);
       expect(res?.status(), 'page responds 200').toBe(200);

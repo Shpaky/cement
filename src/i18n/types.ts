@@ -55,13 +55,16 @@ export interface Dictionary {
     brandLine: string;
     brandTagline: string;
   };
-  nav: Record<SectionId, string>;
+  /** Секции главной + ссылка на страницу для застройщиков. */
+  nav: Record<SectionId, string> & { homeBuilders: string };
   hero: {
     eyebrow: string;
     title: string;
     lead: string;
     ctaCall: string;
     ctaWhatsapp: string;
+    /** Строка-ссылка на страницу для застройщиков под кнопками. */
+    builderLink: string;
     badges: string[];
     illustrationAlt: string;
   };

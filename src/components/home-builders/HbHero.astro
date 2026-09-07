@@ -1,0 +1,125 @@
+---
+import { whatsappLink } from '../../data/company';
+import type { HbDictionary, HbLang } from '../../i18n/home-builders';
+import { hbSectionHref } from '../../i18n/home-builders';
+import Button from '../Button.astro';
+import Container from '../Container.astro';
+
+interface Props {
+  lang: HbLang;
+  hb: HbDictionary;
+}
+const { hb } = Astro.props;
+const t = hb.hero;
+---
+
+<section
+  id="hb-hero"
+  class="relative isolate overflow-hidden bg-brand-800 text-white"
+  aria-labelledby="hb-hero-title"
+>
+  <!-- Декоративный фон: сетка + свечение (id паттерна отличается от главной) -->
+  <div class="pointer-events-none absolute inset-0 -z-10" aria-hidden="true">
+    <div class="absolute inset-0 bg-linear-to-br from-brand-800 via-brand-800 to-brand-900"></div>
+    <svg class="absolute inset-0 h-full w-full opacity-10" aria-hidden="true" focusable="false">
+      <defs>
+        <pattern id="hb-hero-grid" width="48" height="48" patternUnits="userSpaceOnUse">
+          <path d="M48 0H0v48" fill="none" stroke="currentColor" stroke-width="1"></path>
+        </pattern>
+      </defs>
+      <rect width="100%" height="100%" fill="url(#hb-hero-grid)"></rect>
+    </svg>
+    <div
+      class="absolute -right-1/4 -bottom-1/4 h-2/3 w-2/3 rounded-full bg-brand-500 opacity-30 blur-3xl"
+    >
+    </div>
+  </div>
+
+  <Container class="grid items-center gap-12 py-16 md:py-24 lg:grid-cols-12 lg:gap-8 lg:py-28">
+    <div class="lg:col-span-7">
+      <p class="mb-4 text-sm font-bold tracking-widest text-brand-200 uppercase">{t.eyebrow}</p>
+      <h1
+        id="hb-hero-title"
+        class="text-4xl leading-tight font-extrabold tracking-tight text-balance sm:text-5xl lg:text-6xl"
+      >
+        {t.title}
+      </h1>
+      <p class="mt-6 max-w-2xl text-lg leading-relaxed text-brand-100 md:text-xl">{t.lead}</p>
+
+      <div class="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+        <Button
+          href={whatsappLink(t.whatsappText)}
+          variant="inverse"
+          size="lg"
+          target="_blank"
+          rel="noopener"
+        >
+          <svg
+            class="h-5 w-5"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            aria-hidden="true"
+            focusable="false"
+          >
+            <path d="M21 12a9 9 0 0 1-13.4 7.8L3 21l1.2-4.6A9 9 0 1 1 21 12Z"></path>
+            <path
+              d="M9 10a1 1 0 0 0 1 1h1l1 2 2-1a1 1 0 0 1 1 1v1a2 2 0 0 1-2 2 8 8 0 0 1-6-6 2 2 0 0 1 2-2Z"
+            ></path>
+          </svg>
+          {t.ctaExpert}
+        </Button>
+        <Button href={hbSectionHref('calculator')} variant="inverse-outline" size="lg">
+          {t.ctaCalc}
+        </Button>
+        <Button href={hbSectionHref('waterproofing')} variant="inverse-outline" size="lg">
+          {t.ctaGuide}
+        </Button>
+      </div>
+    </div>
+
+    <!-- Иллюстрация: дом (фундамент, стены, крыша, резервуар) в фирменных цветах -->
+    <div class="hidden lg:col-span-5 lg:block">
+      <svg
+        viewBox="0 0 320 320"
+        class="mx-auto h-auto w-full max-w-sm"
+        role="img"
+        aria-label={t.illustrationAlt}
+      >
+        <g class="fill-brand-900" opacity="0.6">
+          <path d="M20 250h280v30H20z"></path>
+        </g>
+        <g class="fill-brand-600">
+          <path d="M60 150h200v100H60z"></path>
+        </g>
+        <g class="fill-brand-500">
+          <path d="M60 150h100v100H60z"></path>
+        </g>
+        <g class="fill-white">
+          <path d="M160 40 40 150h240L160 40Z"></path>
+        </g>
+        <g class="fill-brand-100">
+          <path d="M160 40 40 150h120V40Z"></path>
+        </g>
+        <g class="fill-brand-200">
+          <path d="M200 60h24v40h-24z"></path>
+        </g>
+        <g class="fill-brand-800">
+          <path d="M140 190h40v60h-40z"></path>
+          <path d="M80 170h36v30H80z"></path>
+          <path d="M204 170h36v30h-36z"></path>
+        </g>
+        <g class="fill-brand-400">
+          <path d="M84 174h28v22H84z"></path>
+          <path d="M208 174h28v22h-28z"></path>
+        </g>
+        <g class="fill-brand-100" opacity="0.9">
+          <path d="M40 250h240v10H40z"></path>
+        </g>
+      </svg>
+    </div>
+  </Container>
+</section>

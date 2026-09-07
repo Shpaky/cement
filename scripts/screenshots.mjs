@@ -3,11 +3,14 @@
 //   npm run shots                      — все локали, полная страница
 //   npm run shots -- --lang=en,hi      — только указанные локали
 //   npm run shots -- --section=hero    — только элемент с id="hero"
+//   npm run shots -- --page=home-builders — страница /home-builders/ (только её локали)
 import { mkdir } from 'node:fs/promises';
 import { chromium } from '@playwright/test';
 import { startPreview } from './preview-server.mjs';
 
 const LOCALES = { en: '/', hi: '/hi/', ru: '/ru/' };
+/** Страницы → локали, на которых они существуют (см. PAGE_LANGS в src/i18n/types.ts). */
+const PAGES = { '': Object.keys(LOCALES), 'home-builders': ['en', 'hi'] };
 const WIDTHS = [360, 768, 1280];
 
 const args = Object.fromEntries(
@@ -16,7 +19,10 @@ const args = Object.fromEntries(
     return [k, v];
   }),
 );
-const langs = (args.lang ? args.lang.split(',') : Object.keys(LOCALES)).filter((l) => l in LOCALES);
+const pageSlug = args.page && args.page in PAGES ? args.page : '';
+const langs = (args.lang ? args.lang.split(',') : PAGES[pageSlug]).filter((l) =>
+  PAGES[pageSlug].includes(l),
+);
 const section = args.section;
 const outDir = 'screenshots';
 
@@ -32,7 +38,9 @@ try {
         deviceScaleFactor: 1,
         reducedMotion: 'reduce',
       });
-      await page.goto(`${server.url}${LOCALES[lang]}`, { waitUntil: 'networkidle' });
+      await page.goto(`${server.url}${LOCALES[lang]}${pageSlug ? `${pageSlug}/` : ''}`, {
+        waitUntil: 'networkidle',
+      });
       // Прокручиваем страницу, чтобы сработал loading="lazy", и ждём шрифты/картинки.
       await page.evaluate(async () => {
         const step = window.innerHeight;
@@ -48,7 +56,7 @@ try {
             .map((img) => new Promise((r) => img.addEventListener('load', r, { once: true }))),
         );
       });
-      const file = `${outDir}/${section ? `${section}-` : ''}${lang}-${width}.png`;
+      const file = `${outDir}/${section ? `${section}-` : ''}${pageSlug ? `${pageSlug}-` : ''}${lang}-${width}.png`;
       if (section) {
         // Липкий хедер перекрывал бы элементный снимок — скрываем его только для скриншота.
         await page.addStyleTag({ content: 'header { visibility: hidden !important; }' });
