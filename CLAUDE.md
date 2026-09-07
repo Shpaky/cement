@@ -84,8 +84,9 @@ npm run lighthouse     # LHCI на Chromium из Playwright, пороги в lig
 - Изображения только через `<Image />`/`<Picture />` из astro:assets, avif/webp
 
 ## Процесс
-- Рабочая ветка `devel`; крупные задачи — в feature-ветках от `master` (сейчас
-  `waterproofing-admixtures`, см. `PLAN.md`), слияние в `devel`/`master` только по команде.
+- Рабочие ветки: `devel` и feature-ветки от `master` (сейчас `waterproofing-admixtures`,
+  см. `PLAN.md`). Релиз = PR в `master` из любой рабочей ветки, через `devel` проходить
+  не обязательно; PR и merge — только по команде пользователя.
   `master` — только релизы (деплой на Pages по push в `master` через
   `.github/workflows/deploy.yml`; CI — `ci.yml` на push в `devel`/feature-ветку и PR в `master`).
 - Одна секция лендинга = один коммит (`feat(<section>): ...`), push после коммита.
