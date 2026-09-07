@@ -13,7 +13,9 @@ import Faq from './components/sections/Faq.astro';
 import Hero from './components/sections/Hero.astro';
 import Logistics from './components/sections/Logistics.astro';
 import Products from './components/sections/Products.astro';
-import { getDict, sectionNav, type Lang } from './i18n';
+import { company } from './data/company';
+import { productsByGroup } from './data/products';
+import { getDict, pageUrl, sectionNav, type Lang } from './i18n';
 import Base from './layouts/Base.astro';
 
 interface Props {
@@ -24,9 +26,23 @@ const dict = getDict(lang);
 const nav = sectionNav(lang, dict);
 /** В шапке «Контакты» заменяет кнопка CTA. */
 const headerNav = nav.filter((item) => item.href !== '#contacts');
+
+/** schema.org Product для линейки D5 (характеристики не указываем до получения TDS). */
+const productJsonLd = productsByGroup('waterproofing').map((p) => {
+  const item = dict.products.items[p.id];
+  return {
+    '@type': 'Product',
+    name: item.name,
+    description: item.tagline,
+    category: dict.products.groups.waterproofing.title,
+    brand: { '@type': 'Brand', name: company.brand },
+    manufacturer: { '@type': 'Organization', name: dict.company.name },
+    url: `${pageUrl(lang, 'home')}#products`,
+  };
+});
 ---
 
-<Base lang={lang} dict={dict} page="home">
+<Base lang={lang} dict={dict} page="home" jsonLd={productJsonLd}>
   <Header slot="header" lang={lang} dict={dict} nav={headerNav} page="home" />
 
   <Hero dict={dict} />

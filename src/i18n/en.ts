@@ -2,9 +2,9 @@ import type { Dictionary } from './types';
 
 export const en = {
   meta: {
-    title: 'Russian Cement for India — Made in Russia',
+    title: 'Russian Cement & D5 Waterproofing for India — Made in Russia',
     description:
-      'Cement manufacturer from Russia: OPC and PPC grades for the Indian market. Direct factory supply, sea freight to Indian ports, quality certified.',
+      'Cement manufacturer from Russia: OPC and PPC grades plus D5 waterproofing admixture and D5 Aqua Stop ready-mix for the Indian market. Direct factory supply, sea freight to Indian ports, quality certified.',
   },
   common: {
     skipToContent: 'Skip to content',
@@ -469,7 +469,7 @@ export const en = {
   },
   footer: {
     aboutText:
-      'Russian cement manufacturer supplying OPC and PPC grades to India. Direct contracts, sea freight, full export documentation.',
+      'Russian cement manufacturer supplying OPC and PPC grades and the D5 waterproofing line to India. Direct contracts, sea freight, full export documentation.',
     navTitle: 'Sections',
     contactsTitle: 'Contacts',
     phoneRu: 'Russia',

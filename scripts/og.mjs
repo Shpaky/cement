@@ -118,7 +118,7 @@ try {
     await page.evaluate(() => document.fonts.ready);
     const raw = await page.screenshot({ type: 'png' });
     const png = await sharp(raw)
-      .png({ palette: true, quality: 90, compressionLevel: 9 })
+      .png({ palette: true, quality: 90, dither: 0, compressionLevel: 9 })
       .toBuffer();
     const file = `${OUT_DIR}/${key}.png`;
     await writeFile(file, png);
