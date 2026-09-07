@@ -341,8 +341,24 @@ export const en = {
     lead: 'Short answers on ordering, quality and delivery. Anything else — call or write, we answer in Indian business hours.',
     items: [
       {
-        q: 'What is the minimum order?',
+        q: 'What is the minimum order for cement?',
         a: 'Container lots start from about 500 t (TODO). Bulk vessel shipments are planned from 5,000 t per lot. Smaller trial batches can be arranged for qualification tests.',
+      },
+      {
+        q: 'What is the minimum order for D5?',
+        a: 'D5 admixture and D5 Aqua Stop ship palletised: the minimum is one pallet, which we can consolidate into a container with bagged cement. Exact pallet weight is stated in the TDS.',
+      },
+      {
+        q: 'What is the D5 dosage per m³ of concrete or per bag of cement?',
+        a: 'Dosage depends on the mix and the required impermeability class and is set by the manufacturer’s technical data sheet. Ask us for the TDS — we will send it with a recommended dosage for your application.',
+      },
+      {
+        q: 'Does D5 work with Indian OPC / PPC?',
+        a: 'Yes. D5 is compatible with any Portland cement, including Indian OPC 43/53 and PPC. We recommend a trial mix with your cement and aggregates before the first production batch.',
+      },
+      {
+        q: 'Can we get D5 samples for lab trials?',
+        a: 'Yes. Trial packs of D5 and D5 Aqua Stop are sent by courier together with the TDS and SDS so your laboratory can run its own tests.',
       },
       {
         q: 'Can you supply cement matching IS 269 / IS 1489?',
