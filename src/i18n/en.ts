@@ -213,7 +213,7 @@ export const en = {
     steps: [
       {
         title: 'Plant',
-        text: 'Batch tested, bagged or loaded in bulk, COA issued.',
+        text: 'Cement batch tested, bagged or loaded in bulk; D5 batched and packed on pallets. COA issued for each.',
       },
       {
         title: 'Rail to port',
@@ -247,6 +247,7 @@ export const en = {
         items: [
           'Sea transit: TODO 25–35 days',
           'Monthly vessel or container lots',
+          'D5 products ship palletised in 20/40 ft containers, consolidated with bagged cement',
           'Schedules agreed a quarter ahead',
           'Tracking and ETA updates by e-mail',
         ],
