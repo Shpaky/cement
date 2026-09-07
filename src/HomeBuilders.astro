@@ -7,6 +7,7 @@ import Footer from './components/Footer.astro';
 import Header from './components/Header.astro';
 import HbHero from './components/home-builders/HbHero.astro';
 import MaterialsPicker from './components/home-builders/MaterialsPicker.astro';
+import WaterproofingGuide from './components/home-builders/WaterproofingGuide.astro';
 import { whatsappLink } from './data/company';
 import { getDict, pagePath, sectionNav } from './i18n';
 import { HB_SECTION_IDS, getHbDict, hbSectionHref, type HbLang } from './i18n/home-builders';
@@ -50,6 +51,7 @@ const footerNav = [
 
   <HbHero lang={lang} hb={hb} />
   <MaterialsPicker lang={lang} hb={hb} />
+  <WaterproofingGuide lang={lang} hb={hb} />
 
   <Footer slot="footer" lang={lang} dict={dict} nav={footerNav} />
 </Base>
