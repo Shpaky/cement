@@ -1,3 +1,4 @@
+import type { DocId } from '../data/docs';
 import type { ProductGroup, ProductId, SpecKey } from '../data/products';
 
 /** Поддерживаемые локали. Порядок = порядок в переключателе языков. */
@@ -109,9 +110,13 @@ export interface Dictionary {
     eyebrow: string;
     title: string;
     lead: string;
-    standards: { code: string; title: string; text: string }[];
+    /** Группы стандартов: цемент, гидроизоляция. */
+    groups: { title: string; standards: { code: string; title: string; text: string }[] }[];
     documentsTitle: string;
-    documents: string[];
+    /** Документы на отгрузку; `files` — TDS/SDS из src/data/docs.ts (ссылка или «скоро»). */
+    documents: { text: string; files?: DocId[] }[];
+    docLabels: Record<DocId, string>;
+    comingSoon: string;
     scansTitle: string;
     scansPlaceholder: string;
     note: string;

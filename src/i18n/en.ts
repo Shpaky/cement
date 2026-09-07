@@ -259,36 +259,68 @@ export const en = {
     eyebrow: 'Certificates & standards',
     title: 'Quality you can verify before the vessel sails',
     lead: 'Production is certified to Russian and international standards; each consignment ships with laboratory results and origin documents accepted by Indian customs.',
-    standards: [
+    groups: [
       {
-        code: 'GOST 31108',
-        title: 'Russian national standard',
-        text: 'General construction cements — composition, strength classes and test methods.',
+        title: 'Cement',
+        standards: [
+          {
+            code: 'GOST 31108',
+            title: 'Russian national standard',
+            text: 'General construction cements — composition, strength classes and test methods.',
+          },
+          {
+            code: 'EN 197-1',
+            title: 'European harmonised standard',
+            text: 'CEM I / CEM II classification used for export contracts and third-party inspection.',
+          },
+          {
+            code: 'IS 269 / IS 1489',
+            title: 'Indian standards (BIS)',
+            text: 'Conformity of OPC 43/53 and PPC grades to BIS requirements; BIS licence status: TODO.',
+          },
+          {
+            code: 'ISO 9001',
+            title: 'Quality management',
+            text: 'Certified quality management system at the plant; annual surveillance audits.',
+          },
+        ],
       },
       {
-        code: 'EN 197-1',
-        title: 'European harmonised standard',
-        text: 'CEM I / CEM II classification used for export contracts and third-party inspection.',
-      },
-      {
-        code: 'IS 269 / IS 1489',
-        title: 'Indian standards (BIS)',
-        text: 'Conformity of OPC 43/53 and PPC grades to BIS requirements; BIS licence status: TODO.',
-      },
-      {
-        code: 'ISO 9001',
-        title: 'Quality management',
-        text: 'Certified quality management system at the plant; annual surveillance audits.',
+        title: 'Waterproofing & admixtures',
+        standards: [
+          {
+            code: 'EN 934-2',
+            title: 'Concrete admixtures',
+            text: 'European requirements for admixtures for concrete — the reference standard for D5 test reports.',
+          },
+          {
+            code: 'IS 2645 / IS 9103',
+            title: 'Indian standards for waterproofing compounds and admixtures',
+            text: 'Integral waterproofing compounds and concrete admixtures; conformity of D5 is being registered.',
+          },
+          {
+            code: 'Potable water',
+            title: 'Contact with drinking water',
+            text: 'Certificate for use in potable-water tanks — to be published with the TDS.',
+          },
+        ],
       },
     ],
     documentsTitle: 'Documents per shipment',
     documents: [
-      'Certificate of Analysis (COA) from the plant laboratory',
-      'Certificate of Origin (Chamber of Commerce)',
-      'Commercial invoice & packing list',
-      'Bill of Lading',
-      'Third-party inspection report (SGS / Bureau Veritas) on request',
+      { text: 'Certificate of Analysis (COA) from the plant laboratory' },
+      { text: 'Certificate of Origin (Chamber of Commerce)' },
+      { text: 'Commercial invoice & packing list' },
+      { text: 'Bill of Lading' },
+      { text: 'Third-party inspection report (SGS / Bureau Veritas) on request' },
+      { text: 'TDS and SDS for D5 products', files: ['d5Tds', 'd5Sds', 'aquaStopTds'] },
     ],
+    docLabels: {
+      d5Tds: 'D5 — technical data sheet',
+      d5Sds: 'D5 — safety data sheet',
+      aquaStopTds: 'D5 Aqua Stop — technical data sheet',
+    },
+    comingSoon: 'coming soon',
     scansTitle: 'Certificate scans',
     scansPlaceholder: 'Scan placeholder',
     note: 'TODO: replace placeholders with real certificate scans and licence numbers.',
