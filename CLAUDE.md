@@ -89,6 +89,11 @@ npm run lighthouse     # LHCI на Chromium из Playwright, пороги в lig
   не обязательно; PR и merge — только по команде пользователя.
   `master` — только релизы (деплой на Pages по push в `master` через
   `.github/workflows/deploy.yml`; CI — `ci.yml` на push в `devel`/feature-ветку и PR в `master`).
+- Предпросмотр рабочей ветки на Pages (по команде пользователя): запустить
+  «Deploy to GitHub Pages» вручную из этой ветки — в UI (Actions → Run workflow → ветка)
+  или через API `POST /repos/Shpaky/cement/actions/workflows/deploy.yml/dispatches`
+  с `{"ref": "<ветка>"}`. Ветка должна быть в списке Deployment branches окружения
+  `github-pages`. Сайт один: следующий деплой (в т.ч. push в `master`) его перезапишет.
 - Одна секция лендинга = один коммит (`feat(<section>): ...`), push после коммита.
 - Перед коммитом: `npm run build && npm run lint && npm run test:a11y`
 - После каждой секции сделать скриншоты на 360/768/1280 (`npm run shots`) и показать.
