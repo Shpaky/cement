@@ -23,6 +23,13 @@ export default defineConfig({
         defaultLocale: 'en',
         locales: { en: 'en-IN', hi: 'hi-IN', ru: 'ru-RU' },
       },
+      // Страница застройщиков есть только на EN и HI — убираем ru-RU из alternates.
+      serialize(item) {
+        if (item.url.includes('/home-builders/') && item.links) {
+          item.links = item.links.filter((link) => link.lang !== 'ru-RU');
+        }
+        return item;
+      },
     }),
   ],
   vite: {

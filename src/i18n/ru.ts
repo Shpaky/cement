@@ -18,14 +18,14 @@ export const ru = {
     brandTagline: 'Цемент',
   },
   nav: {
-    about: 'О компании',
+    about: 'О нас',
     products: 'Продукция',
     advantages: 'Почему мы',
     logistics: 'Логистика',
     certificates: 'Сертификаты',
     faq: 'Вопросы',
     contacts: 'Контакты',
-    homeBuilders: 'Частным застройщикам',
+    homeBuilders: 'Застройщикам',
   },
   hero: {
     eyebrow: 'Производитель цемента · Россия → Индия',

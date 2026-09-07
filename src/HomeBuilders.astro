@@ -13,8 +13,9 @@ import MaterialsPicker from './components/home-builders/MaterialsPicker.astro';
 import StickyCta from './components/home-builders/StickyCta.astro';
 import WaterproofingGuide from './components/home-builders/WaterproofingGuide.astro';
 import WhereToBuy from './components/home-builders/WhereToBuy.astro';
-import { whatsappLink } from './data/company';
-import { getDict, pagePath, sectionNav } from './i18n';
+import { company, whatsappLink } from './data/company';
+import { PRODUCTS } from './data/products';
+import { getDict, pagePath, pageUrl, sectionNav } from './i18n';
 import { getHbDict, hbSectionHref, type HbLang, type HbSectionId } from './i18n/home-builders';
 import Base from './layouts/Base.astro';
 
@@ -36,6 +37,30 @@ const footerNav = [
   ...sectionNav(lang, dict, false),
   { href: pagePath(lang, 'homeBuilders'), label: dict.nav.homeBuilders, current: true },
 ];
+
+/** schema.org: шесть продуктов (без характеристик до TDS) и FAQPage. */
+const jsonLd = [
+  ...PRODUCTS.map((p) => {
+    const item = dict.products.items[p.id];
+    return {
+      '@type': 'Product',
+      name: item.name,
+      description: item.tagline,
+      category: dict.products.groups[p.group].title,
+      brand: { '@type': 'Brand', name: company.brand },
+      manufacturer: { '@type': 'Organization', name: dict.company.name },
+      url: `${pageUrl(lang, 'home')}#products`,
+    };
+  }),
+  {
+    '@type': 'FAQPage',
+    mainEntity: hb.faq.items.map((f) => ({
+      '@type': 'Question',
+      name: f.q,
+      acceptedAnswer: { '@type': 'Answer', text: f.a },
+    })),
+  },
+];
 ---
 
 <Base
@@ -45,6 +70,7 @@ const footerNav = [
   title={hb.meta.title}
   description={hb.meta.description}
   ogImage={`og/home-builders-${lang}.png`}
+  jsonLd={jsonLd}
 >
   <Header
     slot="header"

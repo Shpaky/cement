@@ -1,4 +1,4 @@
-// Пороги из CLAUDE.md: Perf/A11y/BP >= 95, SEO = 100. Проверяются все три локали.
+// Пороги из CLAUDE.md: Perf/A11y/BP >= 95, SEO = 100. Проверяются все страницы всех локалей.
 const BASE = 'http://localhost:4323/cement';
 
 module.exports = {
@@ -9,7 +9,13 @@ module.exports = {
         'ASTRO_PREVIEW_BACKGROUND=false npx astro preview --port 4323 --ignore-lock',
       startServerReadyPattern: 'localhost:4323',
       startServerReadyTimeout: 60000,
-      url: [`${BASE}/`, `${BASE}/hi/`, `${BASE}/ru/`],
+      url: [
+        `${BASE}/`,
+        `${BASE}/hi/`,
+        `${BASE}/ru/`,
+        `${BASE}/home-builders/`,
+        `${BASE}/hi/home-builders/`,
+      ],
       numberOfRuns: 1,
       settings: {
         preset: 'desktop',
