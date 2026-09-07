@@ -368,6 +368,10 @@ export const en = {
     eyebrow: 'Why us',
     title: 'What Indian buyers get from working with us directly',
     lead: 'No trading intermediaries: factory price, factory quality control and one responsible partner from contract to port.',
+    featured: {
+      title: 'One supplier for cement and waterproofing',
+      text: 'Order cement and the D5 admixture in one contract, one set of documents, one vessel or container.',
+    },
     items: [
       {
         title: 'Certified quality',
@@ -379,7 +383,7 @@ export const en = {
       },
       {
         title: 'Volumes for large projects',
-        text: 'Monthly volumes from a few thousand tonnes to full-vessel lots, planned quarters ahead.',
+        text: 'Monthly cement volumes from a few thousand tonnes to full-vessel lots, planned quarters ahead. Admixtures from one pallet for trials.',
       },
       {
         title: 'Logistics to Indian ports',
@@ -393,6 +397,16 @@ export const en = {
         title: 'Support in your time zone',
         text: 'Export managers work Indian business hours and answer in English on phone, e-mail, WhatsApp and Telegram.',
       },
+    ],
+    buyersTitle: 'Who we supply',
+    buyers: [
+      'Importers & port terminals',
+      'Distributors & dealers',
+      'Ready-mix concrete plants',
+      'Precast & prestressed producers',
+      'Waterproofing contractors',
+      'Dry-mix manufacturers',
+      'Infrastructure & water-tank projects',
     ],
   },
   company: {

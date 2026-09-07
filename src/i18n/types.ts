@@ -147,7 +147,12 @@ export interface Dictionary {
     eyebrow: string;
     title: string;
     lead: string;
+    /** Акцентная карточка на всю ширину (один поставщик цемента и гидроизоляции). */
+    featured: { title: string; text: string };
     items: { title: string; text: string }[];
+    /** Блок «Кому поставляем»: заголовок и типы покупателей. */
+    buyersTitle: string;
+    buyers: string[];
   };
   company: {
     name: string;
