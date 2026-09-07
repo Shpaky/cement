@@ -1,0 +1,313 @@
+---
+/**
+ * Калькулятор мешков. Единственный на сайте клиентский расчёт: форма без
+ * отправки, всё считается в браузере. Коэффициенты (src/data/calculator.ts)
+ * и подписи передаются в <script type="application/json"> (не входит в
+ * JS-бюджет), логика — в <script> ниже. При отключённом JS видна форма
+ * и подсказка, результат не считается.
+ */
+import { company, whatsappLink } from '../../data/company';
+import { CALCULATOR, WORK_IDS } from '../../data/calculator';
+import type { HbDictionary, HbLang } from '../../i18n/home-builders';
+import Container from '../Container.astro';
+import SectionHeading from '../SectionHeading.astro';
+
+interface Props {
+  lang: HbLang;
+  hb: HbDictionary;
+}
+const { hb } = Astro.props;
+const t = hb.calculator;
+
+const defaultWork = WORK_IDS[0];
+const config = {
+  ...CALCULATOR,
+  labels: {
+    works: t.works,
+    perTds: t.perTds,
+    whatsappText: t.whatsappText,
+    whatsappTextNoBags: t.whatsappTextNoBags,
+    whatsappBase: company.whatsapp,
+  },
+};
+
+const fieldClass =
+  'mt-2 block h-12 w-full rounded-md border border-ink-300 bg-white px-4 text-base text-ink-900 focus:border-brand-500';
+const labelClass = 'block text-sm font-bold text-ink-900';
+---
+
+<section id="calculator" class="scroll-mt-20 py-16 md:py-24" aria-labelledby="calculator-title">
+  <Container>
+    <SectionHeading id="calculator-title" eyebrow={t.eyebrow} title={t.title} lead={t.lead} />
+
+    <div class="grid gap-8 lg:grid-cols-12 lg:gap-12" data-calc>
+      <form
+        class="flex flex-col gap-6 rounded-lg border border-ink-200 bg-white p-6 shadow-card md:p-8 lg:col-span-7"
+        novalidate
+        aria-labelledby="calculator-title"
+      >
+        <div>
+          <label for="calc-work" class={labelClass}>{t.workLabel}</label>
+          <select id="calc-work" name="work" class={fieldClass} data-calc-work>
+            {
+              WORK_IDS.map((id) => (
+                <option value={id} selected={id === defaultWork}>
+                  {t.works[id]}
+                </option>
+              ))
+            }
+          </select>
+        </div>
+
+        <fieldset data-calc-mode-group>
+          <legend class={labelClass}>{t.modeLabel}</legend>
+          <div class="mt-2 flex flex-wrap gap-4">
+            <label class="inline-flex min-h-11 items-center gap-2 text-base text-ink-900">
+              <input
+                type="radio"
+                name="calc-mode"
+                value="area"
+                class="h-5 w-5 accent-brand-600"
+                checked
+                data-calc-mode
+              />
+              {t.modeArea}
+            </label>
+            <label class="inline-flex min-h-11 items-center gap-2 text-base text-ink-900">
+              <input
+                type="radio"
+                name="calc-mode"
+                value="volume"
+                class="h-5 w-5 accent-brand-600"
+                data-calc-mode
+              />
+              {t.modeVolume}
+            </label>
+          </div>
+        </fieldset>
+
+        <div class="grid gap-6 sm:grid-cols-2">
+          <div data-calc-area-group>
+            <label for="calc-area" class={labelClass}>{t.areaLabel}</label>
+            <input
+              id="calc-area"
+              name="area"
+              type="number"
+              inputmode="decimal"
+              min="0"
+              step="any"
+              placeholder="1000"
+              class={fieldClass}
+              data-calc-area
+            />
+          </div>
+          <div data-calc-volume-group hidden>
+            <label for="calc-volume" class={labelClass}>{t.volumeLabel}</label>
+            <input
+              id="calc-volume"
+              name="volume"
+              type="number"
+              inputmode="decimal"
+              min="0"
+              step="any"
+              placeholder="10"
+              class={fieldClass}
+              data-calc-volume
+            />
+          </div>
+          <div data-calc-thickness-group>
+            <label for="calc-thickness" class={labelClass}>{t.thicknessLabel}</label>
+            <select id="calc-thickness" name="thickness" class={fieldClass} data-calc-thickness>
+              {
+                CALCULATOR.works[defaultWork].thicknessMm.map((mm) => (
+                  <option value={mm}>{mm}</option>
+                ))
+              }
+            </select>
+          </div>
+        </div>
+      </form>
+
+      <!-- Результат: aria-live, чтобы скринридер озвучивал пересчёт -->
+      <div
+        class="flex flex-col rounded-lg bg-brand-800 p-6 text-white shadow-card md:p-8 lg:col-span-5"
+        aria-live="polite"
+        data-calc-result
+      >
+        <h3 class="text-xl font-bold">{t.resultTitle}</h3>
+        <p class="mt-4 text-brand-100" data-calc-empty>{t.emptyHint}</p>
+        <dl class="mt-4 flex flex-col gap-4" hidden data-calc-out>
+          <div>
+            <dt class="text-xs font-bold tracking-widest text-brand-200 uppercase">
+              {t.gradeLabel}
+            </dt>
+            <dd class="mt-1 text-lg font-bold" data-calc-grade></dd>
+          </div>
+          <div data-calc-bags-row>
+            <dt class="text-xs font-bold tracking-widest text-brand-200 uppercase">
+              {t.bagsLabel}
+            </dt>
+            <dd class="mt-1 text-5xl font-extrabold tracking-tight" data-calc-bags></dd>
+          </div>
+          <div hidden data-calc-d5-row>
+            <dt class="text-xs font-bold tracking-widest text-brand-200 uppercase">
+              {t.d5Label}
+            </dt>
+            <dd class="mt-1 text-lg font-bold" data-calc-d5></dd>
+          </div>
+          <div hidden data-calc-aqua-row>
+            <dt class="text-xs font-bold tracking-widest text-brand-200 uppercase">
+              {t.aquaStopLabel}
+            </dt>
+            <dd class="mt-1 text-lg font-bold" data-calc-aqua></dd>
+          </div>
+        </dl>
+        <div class="mt-6" hidden data-calc-cta>
+          <a
+            href={whatsappLink()}
+            target="_blank"
+            rel="noopener"
+            class="inline-flex h-12 items-center justify-center gap-2 rounded-md bg-white px-6 text-base font-semibold whitespace-nowrap text-brand-800 transition-colors duration-200 hover:bg-brand-50"
+            data-calc-whatsapp
+          >
+            {t.whatsappCta}
+          </a>
+        </div>
+        <p class="mt-auto pt-6 text-sm text-brand-100">{t.disclaimer}</p>
+      </div>
+    </div>
+
+    <script type="application/json" data-calc-config set:html={JSON.stringify(config)} />
+  </Container>
+</section>
+
+<script>
+  // Клиентский расчёт мешков: коэффициенты и подписи берём из JSON-острова,
+  // считаем на каждое изменение формы, результат пишем в aria-live-блок.
+  interface Work {
+    grade: string;
+    bagsPerM3?: number;
+    bagsPerM2?: Record<string, number>;
+    kgPerM2PerMm?: number | null;
+    thicknessMm: number[];
+    d5?: boolean;
+  }
+  interface Config {
+    wastage: number;
+    sqftToM2: number;
+    works: Record<string, Work>;
+    d5: { kgPerM3: number | null };
+    labels: {
+      works: Record<string, string>;
+      perTds: string;
+      whatsappText: string;
+      whatsappTextNoBags: string;
+      whatsappBase: string;
+    };
+  }
+
+  const root = document.querySelector<HTMLElement>('[data-calc]');
+  const configEl = document.querySelector('[data-calc-config]');
+
+  if (root && configEl) {
+    const cfg = JSON.parse(configEl.textContent ?? '{}') as Config;
+    const el = <T extends HTMLElement>(sel: string) => root.querySelector<T>(sel) as T;
+
+    const workSelect = el<HTMLSelectElement>('[data-calc-work]');
+    const modeGroup = el<HTMLElement>('[data-calc-mode-group]');
+    const modeRadios = Array.from(root.querySelectorAll<HTMLInputElement>('[data-calc-mode]'));
+    const areaGroup = el<HTMLElement>('[data-calc-area-group]');
+    const volumeGroup = el<HTMLElement>('[data-calc-volume-group]');
+    const thicknessGroup = el<HTMLElement>('[data-calc-thickness-group]');
+    const areaInput = el<HTMLInputElement>('[data-calc-area]');
+    const volumeInput = el<HTMLInputElement>('[data-calc-volume]');
+    const thicknessSelect = el<HTMLSelectElement>('[data-calc-thickness]');
+    const empty = el<HTMLElement>('[data-calc-empty]');
+    const out = el<HTMLElement>('[data-calc-out]');
+    const gradeOut = el<HTMLElement>('[data-calc-grade]');
+    const bagsRow = el<HTMLElement>('[data-calc-bags-row]');
+    const bagsOut = el<HTMLElement>('[data-calc-bags]');
+    const d5Row = el<HTMLElement>('[data-calc-d5-row]');
+    const d5Out = el<HTMLElement>('[data-calc-d5]');
+    const aquaRow = el<HTMLElement>('[data-calc-aqua-row]');
+    const aquaOut = el<HTMLElement>('[data-calc-aqua]');
+    const cta = el<HTMLElement>('[data-calc-cta]');
+    const whatsapp = el<HTMLAnchorElement>('[data-calc-whatsapp]');
+
+    const currentWork = (): Work => cfg.works[workSelect.value];
+    const currentMode = (): 'area' | 'volume' =>
+      currentWork().bagsPerM3 && modeRadios.some((r) => r.checked && r.value === 'volume')
+        ? 'volume'
+        : 'area';
+
+    function syncFields() {
+      const work = currentWork();
+      const mode = currentMode();
+      modeGroup.hidden = !work.bagsPerM3;
+      areaGroup.hidden = mode === 'volume';
+      volumeGroup.hidden = mode !== 'volume';
+      thicknessGroup.hidden = mode === 'volume';
+      if (thicknessSelect.dataset.work !== workSelect.value) {
+        thicknessSelect.replaceChildren(
+          ...work.thicknessMm.map((mm) => new Option(String(mm), String(mm))),
+        );
+        thicknessSelect.dataset.work = workSelect.value;
+      }
+    }
+
+    const fmt = (n: number) => n.toLocaleString(document.documentElement.lang);
+
+    function compute() {
+      syncFields();
+      const work = currentWork();
+      const mode = currentMode();
+      const area = parseFloat(areaInput.value);
+      const volume = parseFloat(volumeInput.value);
+      const mm = Number(thicknessSelect.value);
+      const qty = mode === 'volume' ? volume : area;
+
+      if (!(qty > 0)) {
+        empty.hidden = false;
+        out.hidden = true;
+        cta.hidden = true;
+        return;
+      }
+
+      const factor = 1 + cfg.wastage;
+      const m2 = mode === 'area' ? area * cfg.sqftToM2 : 0;
+      const m3 = mode === 'volume' ? volume : (m2 * mm) / 1000;
+
+      let bags: number | null = null;
+      if (work.bagsPerM3) bags = Math.ceil(m3 * work.bagsPerM3 * factor);
+      else if (work.bagsPerM2) bags = Math.ceil(m2 * (work.bagsPerM2[String(mm)] ?? 0) * factor);
+
+      const d5Kg = work.d5 && cfg.d5.kgPerM3 ? Math.ceil(m3 * cfg.d5.kgPerM3 * factor) : null;
+      const aquaKg = work.kgPerM2PerMm ? Math.ceil(m2 * mm * work.kgPerM2PerMm * factor) : null;
+
+      gradeOut.textContent = work.grade;
+      bagsRow.hidden = bags === null;
+      bagsOut.textContent = bags === null ? '' : fmt(bags);
+      d5Row.hidden = !work.d5;
+      d5Out.textContent = d5Kg === null ? cfg.labels.perTds : `~${fmt(d5Kg)} kg`;
+      aquaRow.hidden = !('kgPerM2PerMm' in work);
+      aquaOut.textContent = aquaKg === null ? cfg.labels.perTds : `~${fmt(aquaKg)} kg`;
+
+      const qtyText = mode === 'volume' ? `${fmt(qty)} m³` : `${fmt(qty)} sq ft`;
+      const template = bags === null ? cfg.labels.whatsappTextNoBags : cfg.labels.whatsappText;
+      const text = template
+        .replace('{work}', cfg.labels.works[workSelect.value] ?? workSelect.value)
+        .replace('{qty}', qtyText)
+        .replace('{bags}', bags === null ? '' : fmt(bags))
+        .replace('{grade}', work.grade);
+      whatsapp.href = `${cfg.labels.whatsappBase}?text=${encodeURIComponent(text)}`;
+
+      empty.hidden = true;
+      out.hidden = false;
+      cta.hidden = false;
+    }
+
+    root.addEventListener('input', compute);
+    root.addEventListener('change', compute);
+    syncFields();
+  }
+</script>

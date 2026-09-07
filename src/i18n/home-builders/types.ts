@@ -64,6 +64,8 @@ export interface HbDictionary {
     whatsappCta: string;
     /** Шаблон префилла: {work}, {qty}, {bags}, {grade}. */
     whatsappText: string;
+    /** Шаблон префилла для сухих смесей без расчёта мешков: {work}, {qty}. */
+    whatsappTextNoBags: string;
     disclaimer: string;
   };
 }

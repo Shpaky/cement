@@ -119,6 +119,8 @@ export const hbHi = {
     whatsappCta: 'अनुमान WhatsApp पर भेजें',
     whatsappText:
       'नमस्ते! मेरा अनुमान: {work}, {qty} — लगभग {bags} बैग {grade}। कृपया D5 की मात्रा और कीमत बताएँ।',
+    whatsappTextNoBags:
+      'नमस्ते! मेरा अनुमान: {work}, {qty}। कृपया D5 Aqua Stop की खपत और कीमत बताएँ।',
     disclaimer: 'सांकेतिक अनुमान — अपने इंजीनियर से पुष्टि करें।',
   },
 } satisfies HbDictionary;

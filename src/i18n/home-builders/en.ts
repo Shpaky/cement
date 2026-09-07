@@ -118,6 +118,8 @@ export const hbEn = {
     whatsappCta: 'Send estimate on WhatsApp',
     whatsappText:
       'Hi! My estimate: {work}, {qty} — about {bags} bags of {grade}. Please advise on D5 dosage and price.',
+    whatsappTextNoBags:
+      'Hi! My estimate: {work}, {qty}. Please advise on D5 Aqua Stop consumption and price.',
     disclaimer: 'Indicative estimate — confirm with your engineer.',
   },
 } satisfies HbDictionary;
