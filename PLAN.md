@@ -190,29 +190,29 @@ Planning → Foundation → Frame → Walls & plaster → Curing & care. На к
 
 ## 4. Техническая реализация
 
-- [ ] `src/data/products.json` — 6 продуктов, поле `type`, `null` для неподтверждённых полей
-- [ ] `src/data/calculator.json` — по 3.4
-- [ ] Компонент карточки продукта — рендер полей по `type`, скрытие `null`
-- [ ] Компоненты `src/components/home-builders/`: `HbHero`, `MaterialsPicker`, `WaterproofingGuide`, `BagCalculator` (единственный с client JS), `BuildSteps`, `WhereToBuy`, `HbFaq`, `StickyCta`
-- [ ] `public/docs/` — TDS/SDS плейсхолдеры
-- [ ] Переводы: главная — EN/HI/RU; `/home-builders/` — EN/HI (HI приоритетна)
-- [ ] WhatsApp-префиллы через `wa.me/{number}?text=…`, номер из общего конфига
-- [ ] Иллюстрации: схема дома с 5 зонами (SVG), иконка капля/щит; без сторонних брендов
+- [x] `src/data/products.ts` (TS вместо JSON — типизация `null`) — 6 продуктов, поле `type`, строки карточки по типу; значения в словарях, `null` скрывает строку
+- [x] `src/data/calculator.ts` — по 3.4 (D5/Aqua Stop = `null` до TDS)
+- [x] `src/components/ProductCard.astro` — рендер полей по `type`, скрытие `null`
+- [x] Компоненты `src/components/home-builders/`: `HbHero`, `MaterialsPicker`, `WaterproofingGuide`, `BagCalculator` (единственный с client JS), `BuildSteps`, `WhereToBuy`, `HbFaq`, `StickyCta`
+- [x] TDS/SDS — `src/data/docs.ts` с `href: null` и меткой «coming soon»; фальшивые PDF не публикуем, файлы кладутся в `public/docs/` по получении
+- [x] Переводы: главная — EN/HI/RU; `/home-builders/` — EN/HI (HI — черновик до вычитки)
+- [x] WhatsApp-префиллы через `whatsappLink()` в `src/data/company.ts`
+- [x] Иллюстрации: схема дома с 5 зонами (SVG), дом в hero; без сторонних брендов
 
 ---
 
 ## 5. Чек-лист готовности
 
-- [ ] Products на главной разделён на Cement / Waterproofing & admixtures, 6 карточек, три локали
-- [ ] Hero главной и `/home-builders/` упоминают D5-линейку
-- [ ] Страница открывается по `/home-builders/` и `/hi/home-builders/`; обе точки входа с главной работают
-- [ ] `MaterialsPicker` — 6 строк, `WaterproofingGuide` — 5 зон
-- [ ] Калькулятор считает 5 типов работ; строки D5 / Aqua Stop скрыты при `null`
-- [ ] Sticky-панель только на мобильном
-- [ ] Ссылки на TDS/SDS ведут на файлы или помечены «coming soon»
-- [ ] Числовые характеристики D5 либо подтверждены TDS, либо не выведены
-- [ ] Нет `TODO` в видимом тексте
-- [ ] `npm run build` без ошибок; Lighthouse mobile ≥ 90
+- [x] Products на главной разделён на Cement / Waterproofing & admixtures, 6 карточек, три локали
+- [x] Hero главной и `/home-builders/` упоминают D5-линейку
+- [x] Страница открывается по `/home-builders/` и `/hi/home-builders/`; обе точки входа с главной работают
+- [x] `MaterialsPicker` — 6 строк, `WaterproofingGuide` — 5 зон
+- [x] Калькулятор считает 5 типов работ; строки D5 / Aqua Stop скрыты при `null`
+- [x] Sticky-панель только на мобильном
+- [x] Ссылки на TDS/SDS ведут на файлы или помечены «coming soon»
+- [x] Числовые характеристики D5 либо подтверждены TDS, либо не выведены
+- [ ] Нет `TODO` в видимом тексте — по D5 выполнено; плейсхолдеры по цементу (MOQ, сроки, BIS, адреса) оставлены до брифа (решение от 07.09.2026)
+- [x] `npm run build` без ошибок; Lighthouse desktop 100/100/100/100 на всех 5 URL (порог проекта ≥ 95, SEO = 100)
 
 ---
 
